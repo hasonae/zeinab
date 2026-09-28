@@ -1,6 +1,6 @@
 # Zeinab ALI — Marketing Portfolio
 
-ملف واحد ثابت بدون أي خطوة بناء (no build step): `index.html` + `zeinab.png`.
+ملف واحد ثابت بدون أي خطوة بناء (no build step): `index.html` + أصول الصورة `zeinab.jpg` / `zeinab-icon.png`.
 
 ## Live site
 https://hasonae.github.io/zeinab/
@@ -23,4 +23,5 @@ GitHub Pages من فرع `main` ومن جذر المستودع (Root).
 
 ## ملاحظات / Notes
 - التغييرات التي تُجرى من لوحة التحكم تُحفظ في المتصفح فقط (`localStorage`) ولا تُرفع للمستودع. لجعلها دائمة: عدّل `index.html` ثم أضف commit جديد.
-- الملف `zeinab.png` هو الصورة الشخصية الافتراضية (1121×1403 بنسبة 4:5).
+- الملف `zeinab.jpg` هو الصورة الشخصية الافتراضية (1000×1252 بنسبة 4:5، JPEG بجودة 82 ≈ 161 KB بدل 2 MB الأصلية)، و`zeinab-icon.png` (96×96) هو الـ favicon و`zeinab-icon-180.png` (180×180) هو أيقونة شاشة الهاتف.
+- الملف الأصلي `zeinab.png` (1121×1403) محفوظ في المستودع للمرجعية فقط، ولا يُحمّله الموقع.

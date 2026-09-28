@@ -5,10 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zeinab ALI — Marketing Strategist & Brand Storyteller</title>
 
-<!-- Profile photo / favicon -->
-<link rel="icon" type="image/png" href="zeinab.png">
-<link rel="apple-touch-icon" href="zeinab.png">
-<meta property="og:image" content="zeinab.png">
+<!-- Profile photo / favicon — optimized assets: zeinab.jpg (161 KB) + zeinab-icon.png (26 KB) -->
+<link rel="icon" type="image/png" sizes="96x96" href="zeinab-icon.png">
+<link rel="apple-touch-icon" sizes="180x180" href="zeinab-icon-180.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Zeinab ALI — Marketing Strategist & Brand Storyteller">
+<meta property="og:image" content="https://hasonae.github.io/zeinab/zeinab.jpg">
+<meta property="og:image:width" content="1000">
+<meta property="og:image:height" content="1252">
+<meta property="og:image:alt" content="Portrait of Zeinab ALI, marketing strategist">
+<meta name="twitter:card" content="summary_large_image">
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -243,7 +249,7 @@ tailwind.config = {
         <p class="mt-3 font-display text-2xl md:text-3xl font-bold tracking-tight">Zeinab <span class="italic text-vermilion">ALI</span></p>
       </div>
       <figure class="kb reveal h-16 w-16 md:h-20 md:w-20 shrink-0 rounded-full overflow-hidden border border-ink/15 shadow-card" style="transition-delay:.3s">
-        <img data-profile-photo src="zeinab.png" alt="Portrait of Zeinab ALI, marketing strategist" class="h-full w-full object-cover">
+        <img data-profile-photo src="zeinab.jpg" alt="Portrait of Zeinab ALI, marketing strategist" class="h-full w-full object-cover">
       </figure>
     </div>
 
@@ -314,7 +320,7 @@ tailwind.config = {
           <div class="absolute -top-3 left-8 w-24 h-6 bg-vermilion/80 rotate-[-5deg] z-10"></div>
           <div class="absolute -top-3 right-8 w-24 h-6 bg-tan/90 rotate-[4deg] z-10"></div>
           <figure class="kb relative overflow-hidden">
-            <img id="profilePhoto" data-profile-photo src="zeinab.png" alt="Portrait of Zeinab ALI, marketing strategist" class="w-full aspect-[4/5] object-cover" style="filter:sepia(.14) contrast(1.06) saturate(.92)">
+            <img id="profilePhoto" data-profile-photo src="zeinab.jpg" alt="Portrait of Zeinab ALI, marketing strategist" class="w-full aspect-[4/5] object-cover" style="filter:sepia(.14) contrast(1.06) saturate(.92)">
             <span class="absolute bottom-3 right-3 bg-ink text-cream font-mono text-[9px] tracking-[0.25em] uppercase px-3 py-1.5">Est. Cairo — 1996</span>
           </figure>
           <figcaption class="absolute bottom-4 left-4 right-4 flex justify-between font-mono text-[9px] uppercase tracking-[0.2em] opacity-60">
@@ -668,9 +674,9 @@ tailwind.config = {
       </div>
       <div class="space-y-4 border-t border-ink/15 pt-6">
         <h3 class="font-display text-2xl font-semibold">Profile photo</h3>
-        <p class="font-mono text-[10px] leading-relaxed opacity-60">Default: zeinab.png — replace it with a URL or an upload.</p>
+        <p class="font-mono text-[10px] leading-relaxed opacity-60">Default: zeinab.jpg — replace it with a URL or an upload.</p>
         <div class="flex flex-col gap-4 sm:flex-row sm:items-start">
-          <img data-profile-photo src="zeinab.png" alt="Portrait of Zeinab ALI, marketing strategist" class="h-28 w-24 shrink-0 border border-ink/15 object-cover">
+          <img data-profile-photo src="zeinab.jpg" alt="Portrait of Zeinab ALI, marketing strategist" loading="lazy" decoding="async" class="h-28 w-24 shrink-0 border border-ink/15 object-cover">
           <div class="min-w-0 flex-1 space-y-4">
             <label class="block font-mono text-[10px] uppercase tracking-wider">Photo URL<input id="profilePhotoUrl" type="url" placeholder="Portrait image URL" class="mt-2 w-full border border-ink/20 bg-white/60 p-3 font-body text-sm normal-case tracking-normal"></label>
             <label class="block font-mono text-[10px] uppercase tracking-wider">Upload image from device<input id="profilePhotoFile" type="file" accept="image/*" aria-label="Upload profile photo" class="mt-2 block w-full font-body text-sm normal-case tracking-normal"></label>
@@ -855,7 +861,7 @@ tailwind.config = {
     'Portfolio controls':'إعدادات ملف الأعمال','Edit your portfolio':'تحرير ملف أعمالك','Close ×':'إغلاق ×','Profile copy':'نصوص الملف الشخصي','Hero introduction':'المقدمة الرئيسية','About — paragraph one':'نبذة عني — الفقرة الأولى','About — paragraph two':'نبذة عني — الفقرة الثانية','Selected projects':'المشاريع المختارة','+ Add project':'+ أضف مشروعًا','Changes are saved in this browser on this device. Use the theme button in the header to cycle accent colors.':'تُحفظ التغييرات في هذا المتصفح وعلى هذا الجهاز. استخدم زر السمة في أعلى الصفحة للتبديل بين ألوان التمييز.','Message sent':'تم إرسال الرسالة','Project title':'عنوان المشروع','Project description':'وصف المشروع','Project image URL':'رابط صورة المشروع','Upload image from device':'ارفع صورة من الجهاز','Upload project image':'رفع صورة المشروع','Delete project':'حذف المشروع','New campaign':'حملة جديدة','Add a short project summary here.':'أضف ملخصًا قصيرًا للمشروع هنا.','Selected campaign':'حملة مختارة','New':'جديد','Campaign strategy · Growth':'استراتيجية الحملات · النمو',
     'Switch to Arabic':'التبديل إلى العربية','Switch to English':'التبديل إلى الإنجليزية','Close dashboard':'إغلاق لوحة التحكم','Primary':'الرئيسية','Mobile':'قائمة الهاتف','Accent color: ':'لون التمييز: ','. Change color':'. تغيير اللون',
     '© 2026 Zeinab ALI':'© ٢٠٢٦ زينب علي','Cairo · Dubai · Riyadh':'القاهرة · دبي · الرياض','Portrait of Zeinab ALI, marketing strategist':'صورة زينب علي، استراتيجية تسويق','Taza Foods campaign visuals':'تصاميم حملة Taza Foods','Nova Bank launch campaign':'حملة إطلاق Nova Bank','Layla Beauty social campaign':'حملة Layla Beauty على التواصل الاجتماعي','Orbit Fit retention campaign':'حملة الاحتفاظ بعملاء Orbit Fit','Project title':'عنوان المشروع','Project description':'وصف المشروع','Close dashboard':'إغلاق لوحة التحكم',
-    'Profile photo':'الصورة الشخصية','Default: zeinab.png — replace it with a URL or an upload.':'الصورة الافتراضية: zeinab.png — يمكنك استبدالها برابط أو برفع صورة من الجهاز.','Photo URL':'رابط الصورة','Portrait image URL':'رابط الصورة الشخصية','Upload profile photo':'رفع الصورة الشخصية','Reset to default photo':'إعادة الصورة الافتراضية'
+    'Profile photo':'الصورة الشخصية','Default: zeinab.jpg — replace it with a URL or an upload.':'الصورة الافتراضية: zeinab.jpg — يمكنك استبدالها برابط أو برفع صورة من الجهاز.','Photo URL':'رابط الصورة','Portrait image URL':'رابط الصورة الشخصية','Upload profile photo':'رفع الصورة الشخصية','Reset to default photo':'إعادة الصورة الافتراضية'
   };
   const originalTextNodes = new WeakMap();
   const originalHtml = new WeakMap();
@@ -1012,10 +1018,10 @@ tailwind.config = {
     });
   });
 
-  // Profile photo: default is zeinab.png sitting next to this file.
+  // Profile photo: default is the optimized zeinab.jpg sitting next to this file.
   const photoKey = 'portfolio-photo';
   const profileImages = $$('[data-profile-photo]');
-  const defaultProfilePhoto = profileImages[0]?.getAttribute('src') || 'zeinab.png';
+  const defaultProfilePhoto = profileImages[0]?.getAttribute('src') || 'zeinab.jpg';
   const photoUrlField = $('#profilePhotoUrl');
   const photoFileField = $('#profilePhotoFile');
   let photoFallbackUsed = false;
