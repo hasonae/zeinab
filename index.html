@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zeinab ALI — Marketing Strategist & Brand Storyteller</title>
+
+<!-- Profile photo / favicon -->
+<link rel="icon" type="image/png" href="zeinab.png">
+<link rel="apple-touch-icon" href="zeinab.png">
+<meta property="og:image" content="zeinab.png">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Space+Grotesk:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Tailwind -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        ink: '#191512',
+        cream: '#F4EEE1',
+        paper: '#EDE4D3',
+        tan: '#D8C9AC',
+        vermilion: '#F04E23',
+        gold: '#C89B3C',
+      },
+      fontFamily: {
+        display: ['Fraunces', 'serif'],
+        body: ['"Space Grotesk"', 'sans-serif'],
+        mono: ['"Space Mono"', 'monospace'],
+        arabic: ['Amiri', 'serif'],
+      },
+      boxShadow: {
+        card: '0 24px 70px -24px rgba(25,21,18,.4)',
+      }
+    }
+  }
+}
+</script>
+
+<!-- Three.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+<style>
+  ::selection { background:#F04E23; color:#F4EEE1; }
+  html { scroll-behavior:smooth; }
+  body { overflow-x:hidden; }
+  html[lang="ar"] body { font-family:'Amiri',serif; }
+  ::-webkit-scrollbar { width:10px; }
+  ::-webkit-scrollbar-track { background:#EDE4D3; }
+  ::-webkit-scrollbar-thumb { background:#191512; border-radius:8px; border:2px solid #EDE4D3; }
+  a:focus-visible, button:focus-visible { outline:2px solid #F04E23; outline-offset:3px; }
+
+  /* ---------- film grain ---------- */
+  .grain{ position:fixed; inset:-100%; z-index:85; pointer-events:none; opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation:grain 8s steps(10) infinite; }
+  @keyframes grain{
+    0%,100%{transform:translate(0,0)} 10%{transform:translate(-5%,-8%)}
+    20%{transform:translate(-10%,4%)} 30%{transform:translate(6%,-12%)}
+    40%{transform:translate(-4%,10%)} 50%{transform:translate(-9%,4%)}
+    60%{transform:translate(9%,0)}   70%{transform:translate(0,9%)}
+    80%{transform:translate(3%,14%)} 90%{transform:translate(-7%,7%)} }
+
+  /* ---------- marquees ---------- */
+  .marquee{ overflow:hidden; }
+  .marquee-track{ display:flex; width:max-content; animation:marquee var(--speed,32s) linear infinite; }
+  .marquee-track.rev{ animation-direction:reverse; }
+  .marquee:hover .marquee-track{ animation-play-state:paused; }
+  @keyframes marquee{ from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+  /* ---------- reveals ---------- */
+  .rl{ display:block; transform:translateY(118%); transition:transform 1s cubic-bezier(.2,.65,.1,1); will-change:transform; }
+  .rl.in{ transform:none; }
+  .reveal{ opacity:0; transform:translateY(30px); transition:opacity .9s ease, transform .9s cubic-bezier(.2,.65,.1,1); }
+  .reveal.in{ opacity:1; transform:none; }
+
+  /* ---------- breathing image ---------- */
+  .kb{ overflow:hidden; }
+  .kb img{ animation:kb 16s ease-in-out infinite alternate; }
+  @keyframes kb{ from{transform:scale(1) translate(0,0)} to{transform:scale(1.12) translate(2%,-2%)} }
+
+  /* ---------- outlined numerals ---------- */
+  .outline-num{ -webkit-text-stroke:1.5px rgba(25,21,18,.4); color:transparent; }
+  .outline-num-light{ -webkit-text-stroke:1.5px rgba(244,238,225,.35); color:transparent; }
+
+  /* ---------- underline link ---------- */
+  .link-u{ background-image:linear-gradient(currentColor,currentColor); background-size:0% 1.5px; background-position:0 100%; background-repeat:no-repeat; transition:background-size .45s cubic-bezier(.2,.65,.1,1); padding-bottom:2px; }
+  .link-u:hover, .group:hover .link-u{ background-size:100% 1.5px; }
+
+  /* ---------- header ---------- */
+  #siteHeader.scrolled{ background:rgba(244,238,225,.88); backdrop-filter:blur(14px); border-bottom:1px solid rgba(25,21,18,.12); }
+
+  /* ---------- loader ---------- */
+  #loader{ transition:opacity .7s ease, visibility .7s; }
+  #loader.done{ opacity:0; visibility:hidden; }
+
+  /* ---------- scroll cue ---------- */
+  @keyframes scrollline{ 0%{transform:translateY(-110%)} 100%{transform:translateY(220%)} }
+  .animate-scrollline{ animation:scrollline 1.7s ease-in-out infinite; }
+
+  /* ---------- rotating badge ---------- */
+  @keyframes spinSlow{ to{transform:rotate(360deg)} }
+  .spin-slow{ animation:spinSlow 14s linear infinite; }
+
+  /* ---------- stacked cards ---------- */
+  .stack-card{ will-change:transform; }
+
+  /* ---------- custom cursor ---------- */
+  #cursorDot,#cursorRing{ position:fixed; top:0; left:0; pointer-events:none; z-index:100; opacity:0; border-radius:50%; transform:translate(-50%,-50%); }
+  #cursorDot{ width:7px; height:7px; background:#F04E23; }
+  #cursorRing{ width:38px; height:38px; border:1.5px solid #fff; mix-blend-mode:difference; transition:width .3s, height .3s, opacity .3s; }
+  #cursorDot.on,#cursorRing.on{ opacity:1; }
+  body.cursor-big #cursorRing{ width:70px; height:70px; }
+  @media (pointer:coarse){ #cursorDot,#cursorRing{ display:none; } }
+
+  /* ---------- service preview ---------- */
+  #svcPreview{ position:absolute; top:0; left:0; width:230px; height:170px; z-index:30; pointer-events:none; overflow:hidden; opacity:0; transform:translate(-50%,-115%) rotate(4deg) scale(.85); transition:opacity .35s ease, filter .35s; box-shadow:0 20px 50px -18px rgba(25,21,18,.5); }
+  #svcPreview.show{ opacity:1; }
+  #svcPreview img{ width:100%; height:100%; object-fit:cover; filter:grayscale(1) contrast(1.05); }
+
+  /* ---------- toast ---------- */
+  #toast{ opacity:0; transform:translate(-50%,16px); transition:all .45s cubic-bezier(.2,.65,.1,1); }
+  #toast.show{ opacity:1; transform:translate(-50%,0); }
+
+  /* ---------- theme variants ---------- */
+  body.theme-green .text-vermilion{ color:#16834A !important; }
+  body.theme-green .bg-vermilion{ background-color:#16834A !important; }
+  body.theme-green .border-vermilion{ border-color:#16834A !important; }
+  body.theme-green .group:hover .group-hover\:text-vermilion{ color:#16834A !important; }
+  body.theme-pink .text-vermilion{ color:#D63384 !important; }
+  body.theme-pink .bg-vermilion{ background-color:#D63384 !important; }
+  body.theme-pink .border-vermilion{ border-color:#D63384 !important; }
+  body.theme-pink .group:hover .group-hover\:text-vermilion{ color:#D63384 !important; }
+  body.theme-green #cursorDot{ background:#16834A; }
+  body.theme-pink #cursorDot{ background:#D63384; }
+
+  /* ---------- dashboard ---------- */
+  #passwordGate[hidden]{ display:none; }
+  #passwordGate{ display:flex; }
+  #adminPanel{ opacity:0; visibility:hidden; transition:opacity .25s, visibility .25s; }
+  #adminPanel.open{ opacity:1; visibility:visible; }
+  #adminPanel .admin-dialog{ transform:translateY(16px); transition:transform .25s; }
+  #adminPanel.open .admin-dialog{ transform:none; }
+
+  /* ---------- mobile menu ---------- */
+  #mobileMenu{ transform:translateY(-102%); transition:transform .7s cubic-bezier(.75,0,.2,1); }
+  #mobileMenu.open{ transform:translateY(0); }
+  #mobileMenu.open .m-link{ opacity:1; transform:none; }
+  .m-link{ opacity:0; transform:translateY(24px); transition:opacity .6s ease, transform .6s cubic-bezier(.2,.65,.1,1); }
+
+  /* ---------- prefers-reduced-motion ---------- */
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *,*::before,*::after{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; }
+    .marquee-track{ animation:none; flex-wrap:wrap; width:auto; }
+    .rl,.reveal{ opacity:1; transform:none; }
+    .kb img{ animation:none; }
+    #cursorDot,#cursorRing{ display:none !important; }
+  }
+</style>
+</head>
+
+<body id="top" class="bg-cream text-ink font-body antialiased">
+
+<!-- ======= LOADER ======= -->
+<div id="loader" class="fixed inset-0 z-[90] bg-ink text-cream flex items-end justify-between p-6 md:p-12">
+  <div>
+    <div class="font-display text-6xl md:text-8xl font-black leading-none tracking-tight">Z<span class="italic text-vermilion">A</span></div>
+    <div class="font-mono text-[10px] tracking-[0.35em] uppercase mt-4 opacity-60">Marketing Portfolio — 2026</div>
+  </div>
+  <div class="text-right">
+    <div class="font-mono text-[10px] tracking-[0.3em] uppercase opacity-60 mb-2">Loading campaign</div>
+    <div id="loaderNum" class="font-mono text-5xl md:text-7xl leading-none">000</div>
+    <div class="w-44 h-px bg-cream/20 mt-4 ml-auto"><div id="loaderBar" class="h-full bg-vermilion" style="width:0%"></div></div>
+  </div>
+</div>
+
+<!-- ======= GRAIN + PROGRESS + CURSOR ======= -->
+<div class="grain" aria-hidden="true"></div>
+<div id="scrollProgress" class="fixed top-0 left-0 h-[3px] bg-vermilion z-[88] w-0"></div>
+<div id="cursorDot" aria-hidden="true"></div>
+<div id="cursorRing" aria-hidden="true"></div>
+
+<!-- ======= HEADER ======= -->
+<header id="siteHeader" class="fixed top-0 inset-x-0 z-[70] transition-all duration-500">
+  <div class="mx-auto max-w-[1440px] px-5 md:px-10 flex items-center justify-between h-16 md:h-20">
+    <a href="#top" class="flex items-baseline gap-3">
+      <span class="font-display text-xl md:text-2xl font-bold tracking-tight">Zeinab <span class="italic text-vermilion">ALI</span></span>
+      <span class="hidden lg:block font-mono text-[10px] tracking-[0.28em] uppercase opacity-50">Marketing · Cairo</span>
+    </a>
+    <nav class="hidden md:flex items-center gap-8 font-mono text-[11px] uppercase tracking-[0.22em]" aria-label="Primary">
+      <a href="#about" class="link-u hover:text-vermilion transition-colors"><span class="text-vermilion">01</span> About</a>
+      <a href="#services" class="link-u hover:text-vermilion transition-colors"><span class="text-vermilion">02</span> Services</a>
+      <a href="#work" class="link-u hover:text-vermilion transition-colors"><span class="text-vermilion">03</span> Work</a>
+      <a href="#process" class="link-u hover:text-vermilion transition-colors"><span class="text-vermilion">05</span> Process</a>
+      <a href="#contact" class="border border-ink/30 px-4 py-2 hover:bg-ink hover:text-cream transition-colors duration-300">Start a project</a>
+    </nav>
+    <div class="flex items-center gap-2 md:gap-4">
+      <span class="hidden xl:flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] opacity-70">
+        <span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-vermilion opacity-60"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-vermilion"></span></span>
+        Booking Q4 ’26
+      </span>
+      <button id="langBtn" class="border border-ink/20 px-2.5 py-2 font-mono text-[10px] uppercase tracking-wider hover:bg-ink hover:text-cream transition-colors" type="button" aria-label="Switch to Arabic">AR</button>
+      <button id="themeBtn" class="border border-ink/20 px-2.5 py-2 font-mono text-[10px] uppercase tracking-wider hover:bg-ink hover:text-cream transition-colors" type="button">Theme</button>
+      <button id="adminBtn" class="border border-ink/20 px-2 py-2 font-mono text-[10px] uppercase tracking-wider hover:bg-ink hover:text-cream transition-colors" type="button">Edit</button>
+      <button id="menuBtn" class="md:hidden w-11 h-11 flex flex-col items-center justify-center gap-1.5 border border-ink/20" aria-label="Open menu" aria-expanded="false">
+        <span class="menu-line w-5 h-[2px] bg-ink transition-transform"></span>
+        <span class="menu-line w-5 h-[2px] bg-ink transition-transform"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ======= MOBILE MENU ======= -->
+<div id="mobileMenu" class="fixed inset-0 z-[80] bg-ink text-cream flex flex-col justify-between p-6 pt-20 md:p-12" aria-hidden="true">
+  <nav class="flex flex-col gap-2" aria-label="Mobile">
+    <a href="#about" class="m-link font-display text-5xl font-bold py-2 border-b border-cream/10" style="transition-delay:.15s"><span class="font-mono text-xs text-vermilion mr-4">01</span>About</a>
+    <a href="#services" class="m-link font-display text-5xl font-bold py-2 border-b border-cream/10" style="transition-delay:.22s"><span class="font-mono text-xs text-vermilion mr-4">02</span>Services</a>
+    <a href="#work" class="m-link font-display text-5xl font-bold py-2 border-b border-cream/10" style="transition-delay:.29s"><span class="font-mono text-xs text-vermilion mr-4">03</span>Work</a>
+    <a href="#process" class="m-link font-display text-5xl font-bold py-2 border-b border-cream/10" style="transition-delay:.36s"><span class="font-mono text-xs text-vermilion mr-4">05</span>Process</a>
+    <a href="#contact" class="m-link font-display text-5xl font-bold py-2 text-vermilion" style="transition-delay:.43s"><span class="font-mono text-xs mr-4">08</span>Contact ↗</a>
+  </nav>
+  <div class="m-link font-mono text-[10px] tracking-[0.3em] uppercase opacity-60 flex justify-between" style="transition-delay:.5s">
+    <span>CAIRO, EGYPT</span><span class="js-clock">--:--</span>
+  </div>
+</div>
+
+<!-- ======= HERO ======= -->
+<section class="relative min-h-screen flex flex-col overflow-hidden">
+  <canvas id="threeHero" class="absolute inset-0 w-full h-full z-0"></canvas>
+
+  <div class="relative z-10 mx-auto max-w-[1440px] w-full px-5 md:px-10 pt-28 md:pt-36 pb-44 flex-1 flex flex-col justify-between">
+
+    <div class="flex items-start justify-between gap-6">
+      <div>
+        <p class="font-mono text-[10px] md:text-[11px] uppercase tracking-[0.3em] opacity-70 max-w-[220px] leading-relaxed">Marketing strategist —<br>Portfolio Nº 01 / 2026</p>
+        <p class="mt-3 font-display text-2xl md:text-3xl font-bold tracking-tight">Zeinab <span class="italic text-vermilion">ALI</span></p>
+      </div>
+      <figure class="kb reveal h-16 w-16 md:h-20 md:w-20 shrink-0 rounded-full overflow-hidden border border-ink/15 shadow-card" style="transition-delay:.3s">
+        <img data-profile-photo src="zeinab.png" alt="Portrait of Zeinab ALI, marketing strategist" class="h-full w-full object-cover">
+      </figure>
+    </div>
+
+    <div class="mt-10 grid lg:grid-cols-12 gap-8 items-end">
+      <div class="lg:col-span-9">
+        <h1 class="font-display font-black leading-[0.84] tracking-[-0.03em] text-[clamp(4.2rem,15vw,13.5rem)]">
+          <span class="block overflow-hidden"><span class="rl rl-hero" data-text="ZEINAB" data-delay="0">ZEINAB</span></span>
+          <span class="block overflow-hidden pl-[6vw]"><span class="rl rl-hero italic text-vermilion" data-text="ALI" data-delay="120">ALI</span></span>
+        </h1>
+      </div>
+      <div class="lg:col-span-3 lg:pb-4">
+        <p id="heroIntro" class="reveal text-base md:text-lg leading-relaxed max-w-sm" style="transition-delay:.5s">I plan, launch and scale campaigns that turn <em class="font-display italic">attention into revenue</em> — 8 years across food, fintech, beauty &amp; fitness.</p>
+        <div class="reveal mt-6 flex flex-col gap-2 font-mono text-[11px] uppercase tracking-[0.22em]" style="transition-delay:.65s">
+          <a href="#work" class="link-u w-fit hover:text-vermilion transition-colors">See the campaigns ↓</a>
+          <a href="#contact" class="link-u w-fit hover:text-vermilion transition-colors">Start a project ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal mt-14 grid grid-cols-2 md:grid-cols-4 border-t border-ink/15" style="transition-delay:.75s">
+      <div class="py-5 md:pr-6"><div class="font-display text-3xl md:text-4xl font-bold">08<span class="text-vermilion">+</span></div><div class="font-mono text-[10px] uppercase tracking-[0.25em] opacity-60 mt-1">Years in marketing</div></div>
+      <div class="py-5 md:px-6 border-l border-ink/15"><div class="font-display text-3xl md:text-4xl font-bold">87</div><div class="font-mono text-[10px] uppercase tracking-[0.25em] opacity-60 mt-1">Campaigns shipped</div></div>
+      <div class="py-5 md:px-6 md:border-l border-ink/15"><div class="font-display text-3xl md:text-4xl font-bold">$12.4M</div><div class="font-mono text-[10px] uppercase tracking-[0.25em] opacity-60 mt-1">Ad spend managed</div></div>
+      <div class="py-5 md:px-6 border-l border-ink/15"><div class="font-display text-3xl md:text-4xl font-bold">3.4×</div><div class="font-mono text-[10px] uppercase tracking-[0.25em] opacity-60 mt-1">Average ROAS</div></div>
+    </div>
+  </div>
+
+  <!-- rotating badge -->
+  <div class="hidden xl:flex absolute right-12 bottom-44 z-10 items-center justify-center w-36 h-36">
+    <svg class="spin-slow absolute inset-0 w-full h-full" viewBox="0 0 100 100" aria-hidden="true">
+      <defs><path id="circ" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs>
+      <text class="font-mono" font-size="7.5" letter-spacing="2.6" fill="#191512">
+        <textPath href="#circ">OPEN FOR CAMPAIGNS ✦ BRAND ✦ GROWTH ✦</textPath>
+      </text>
+    </svg>
+    <span class="text-vermilion text-2xl">✳</span>
+  </div>
+
+  <!-- scroll cue -->
+  <div class="hidden md:flex absolute left-10 bottom-32 z-10 flex-col items-center gap-3">
+    <span class="font-mono text-[9px] tracking-[0.35em] uppercase [writing-mode:vertical-rl] rotate-180 opacity-60">Scroll</span>
+    <span class="relative w-px h-16 bg-ink/15 overflow-hidden"><span class="animate-scrollline absolute top-0 left-0 w-full h-1/2 bg-vermilion"></span></span>
+  </div>
+
+  <!-- ticker -->
+  <div class="absolute bottom-0 inset-x-0 z-10 border-y border-ink/15 bg-cream/80 backdrop-blur-sm">
+    <div class="marquee py-3 font-mono text-[10px] md:text-[11px] uppercase tracking-[0.25em]" style="--speed:36s">
+      <div class="marquee-track">
+        <div class="flex shrink-0 items-center">
+          <span class="px-6">Brand Strategy</span><span class="text-vermilion">✦</span><span class="px-6">Performance Media</span><span class="text-vermilion">✦</span><span class="px-6">Content that compounds</span><span class="text-vermilion">✦</span><span class="px-6">Lifecycle &amp; CRM</span><span class="text-vermilion">✦</span><span class="px-6">Analytics-first</span><span class="text-vermilion">✦</span><span class="px-6">Cairo → Dubai → Riyadh</span><span class="text-vermilion">✦</span>
+        </div>
+        <div class="flex shrink-0 items-center" aria-hidden="true">
+          <span class="px-6">Brand Strategy</span><span class="text-vermilion">✦</span><span class="px-6">Performance Media</span><span class="text-vermilion">✦</span><span class="px-6">Content that compounds</span><span class="text-vermilion">✦</span><span class="px-6">Lifecycle &amp; CRM</span><span class="text-vermilion">✦</span><span class="px-6">Analytics-first</span><span class="text-vermilion">✦</span><span class="px-6">Cairo → Dubai → Riyadh</span><span class="text-vermilion">✦</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= 01 · ABOUT ======= -->
+<section id="about" class="scroll-mt-24 mx-auto max-w-[1440px] px-5 md:px-10 py-24 md:py-36">
+  <div class="grid lg:grid-cols-12 gap-12 lg:gap-16">
+
+    <!-- sticky portrait -->
+    <div class="lg:col-span-5">
+      <div class="lg:sticky lg:top-28">
+        <div class="reveal relative rotate-[-2deg] bg-paper border border-ink/10 p-3 pb-14 shadow-card max-w-md mx-auto lg:mx-0">
+          <div class="absolute -top-3 left-8 w-24 h-6 bg-vermilion/80 rotate-[-5deg] z-10"></div>
+          <div class="absolute -top-3 right-8 w-24 h-6 bg-tan/90 rotate-[4deg] z-10"></div>
+          <figure class="kb relative overflow-hidden">
+            <img id="profilePhoto" data-profile-photo src="zeinab.png" alt="Portrait of Zeinab ALI, marketing strategist" class="w-full aspect-[4/5] object-cover" style="filter:sepia(.14) contrast(1.06) saturate(.92)">
+            <span class="absolute bottom-3 right-3 bg-ink text-cream font-mono text-[9px] tracking-[0.25em] uppercase px-3 py-1.5">Est. Cairo — 1996</span>
+          </figure>
+          <figcaption class="absolute bottom-4 left-4 right-4 flex justify-between font-mono text-[9px] uppercase tracking-[0.2em] opacity-60">
+            <span>Zeinab ALI — Strategist</span><span>30.04°N / 31.23°E</span>
+          </figcaption>
+        </div>
+        <div class="reveal mt-10 hidden lg:block font-mono text-[10px] uppercase tracking-[0.25em] opacity-50 leading-loose" style="transition-delay:.2s">
+          <p>Currently: Head of Growth @ Maison K.</p>
+          <p>Previously: Nova Bank · Orbit Fit</p>
+          <p>Coffee: 3/day · Dashboards: checked 7AM</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- bio -->
+    <div class="lg:col-span-7">
+      <div class="reveal flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.3em] opacity-60">
+        <span class="w-9 h-px bg-vermilion"></span> 01 — About
+      </div>
+      <h2 class="mt-6 font-display font-bold tracking-tight text-4xl md:text-6xl lg:text-7xl leading-[1.02]">
+        <span class="block overflow-hidden"><span class="rl">Attention is cheap.</span></span>
+        <span class="block overflow-hidden"><span class="rl italic text-vermilion" style="transition-delay:.12s">Being remembered</span></span>
+        <span class="block overflow-hidden"><span class="rl" style="transition-delay:.24s">is expensive. I build the second.</span></span>
+      </h2>
+
+      <div class="mt-10 grid md:grid-cols-2 gap-8 text-[15px] leading-relaxed opacity-80">
+        <div class="reveal space-y-4">
+          <p id="aboutBioOne">I'm Zeinab — a marketing strategist who treats every campaign like a small business: it has to earn its budget back. I started in a tiny Cairo social agency scheduling posts at midnight; today I lead growth across four industries and two continents.</p>
+          <p>My work sits where brand and performance meet. I write the positioning, pressure-test the creative, and then defend the numbers in the boardroom — in English, Arabic, or spreadsheet.</p>
+        </div>
+        <div class="reveal space-y-4" style="transition-delay:.15s">
+          <p id="aboutBioTwo">I believe in boring magic: weekly creative velocity, ruthless A/B discipline, and stories people actually retell. No vanity metrics, no "awareness" hand-waving — every plan ends with a number we're accountable to.</p>
+          <p>When I'm not optimizing, I'm mentoring women entering MENA growth teams and writing <em>Al-Souq</em>, a fortnightly newsletter on marketing craft.</p>
+        </div>
+      </div>
+
+      <div class="reveal mt-10 border-l-2 border-vermilion pl-6 py-2" style="transition-delay:.25s">
+        <p class="font-display italic text-2xl md:text-3xl leading-snug">"Zeinab is the rare marketer who speaks both Creative and CFO."</p>
+        <p class="font-mono text-[10px] uppercase tracking-[0.25em] opacity-50 mt-3">— Omar S., CMO @ Nova Bank</p>
+      </div>
+
+      <div class="reveal mt-12 grid grid-cols-2 md:grid-cols-4 gap-px bg-ink/10 border border-ink/10" style="transition-delay:.3s">
+        <div class="bg-cream p-4"><div class="font-mono text-[9px] uppercase tracking-[0.25em] opacity-50 mb-1">Based</div><div class="font-display font-semibold">Cairo, EG</div></div>
+        <div class="bg-cream p-4"><div class="font-mono text-[9px] uppercase tracking-[0.25em] opacity-50 mb-1">Languages</div><div class="font-display font-semibold">AR · EN · FR</div></div>
+        <div class="bg-cream p-4"><div class="font-mono text-[9px] uppercase tracking-[0.25em] opacity-50 mb-1">Focus</div><div class="font-display font-semibold">Growth + Brand</div></div>
+        <div class="bg-cream p-4"><div class="font-mono text-[9px] uppercase tracking-[0.25em] opacity-50 mb-1">Status</div><div class="font-display font-semibold text-vermilion">Open to briefs</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- clients marquee -->
+  <div class="reveal mt-24 border-y border-ink/15 py-6">
+    <div class="marquee" style="--speed:40s">
+      <div class="marquee-track font-display text-2xl md:text-4xl uppercase tracking-wide">
+        <div class="flex shrink-0 items-center gap-8 px-4">
+          <span>Taza Foods</span><span class="text-vermilion text-lg">✦</span><span class="italic opacity-70">Nova Bank</span><span class="text-vermilion text-lg">✦</span><span>Layla Beauty</span><span class="text-vermilion text-lg">✦</span><span class="italic opacity-70">Orbit Fit</span><span class="text-vermilion text-lg">✦</span><span>Atlas Air</span><span class="text-vermilion text-lg">✦</span><span class="italic opacity-70">Maison K.</span><span class="text-vermilion text-lg">✦</span><span>Nile &amp; Co</span><span class="text-vermilion text-lg">✦</span>
+        </div>
+        <div class="flex shrink-0 items-center gap-8 px-4" aria-hidden="true">
+          <span>Taza Foods</span><span class="text-vermilion text-lg">✦</span><span class="italic opacity-70">Nova Bank</span><span class="text-vermilion text-lg">✦</span><span>Layla Beauty</span><span class="text-vermilion text-lg">✦</span><span class="italic opacity-70">Orbit Fit</span><span class="text-vermilion text-lg">✦</span><span>Atlas Air</span><span class="text-vermilion text-lg">✦</span><span class="italic opacity-70">Maison K.</span><span class="text-vermilion text-lg">✦</span><span>Nile &amp; Co</span><span class="text-vermilion text-lg">✦</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= 02 · SERVICES ======= -->
+<section id="services" class="scroll-mt-24 bg-paper relative">
+  <div class="mx-auto max-w-[1440px] px-5 md:px-10 py-24 md:py-36">
+    <div class="reveal flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.3em] opacity-60">
+      <span class="w-9 h-px bg-vermilion"></span> 02 — What I do
+    </div>
+    <div class="mt-6 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+      <h2 class="font-display font-bold tracking-tight text-4xl md:text-6xl leading-tight">
+        Five disciplines,<br><span class="italic text-vermilion">one accountable number.</span>
+      </h2>
+      <p class="reveal max-w-xs text-sm opacity-70 leading-relaxed lg:text-right" style="transition-delay:.15s">Hover each discipline — every service comes with the tooling, the templates, and the receipts.</p>
+    </div>
+
+    <div id="servicesList" class="relative mt-14 border-t border-ink/15">
+
+      <a href="#contact" data-img="https://picsum.photos/seed/service-brand-strategy/560/420" class="service-row group relative grid grid-cols-12 items-center gap-3 md:gap-6 py-7 md:py-9 border-b border-ink/15 overflow-hidden">
+        <span class="absolute inset-0 bg-ink origin-bottom scale-y-0 group-hover:scale-y-100 transition-transform duration-500 ease-out"></span>
+        <span class="relative z-10 col-span-2 md:col-span-1 font-mono text-xs text-vermilion">(01)</span>
+        <h3 class="relative z-10 col-span-10 md:col-span-4 font-display text-2xl md:text-4xl font-semibold tracking-tight group-hover:text-cream group-hover:italic transition-all duration-300">Brand Strategy</h3>
+        <p class="relative z-10 hidden md:block md:col-span-5 text-sm leading-relaxed text-ink/60 group-hover:text-cream/70 transition-colors">Positioning, naming and offer architecture — the story before the spend. If this is wrong, no budget can fix it.</p>
+        <span class="relative z-10 hidden md:flex md:col-span-2 justify-end font-mono text-[10px] uppercase tracking-[0.18em] text-ink/50 group-hover:text-vermilion transition-colors">Positioning ↗</span>
+      </a>
+
+      <a href="#contact" data-img="https://picsum.photos/seed/service-performance-media/560/420" class="service-row group relative grid grid-cols-12 items-center gap-3 md:gap-6 py-7 md:py-9 border-b border-ink/15 overflow-hidden">
+        <span class="absolute inset-0 bg-vermilion origin-bottom scale-y-0 group-hover:scale-y-100 transition-transform duration-500 ease-out"></span>
+        <span class="relative z-10 col-span-2 md:col-span-1 font-mono text-xs text-vermilion group-hover:text-cream transition-colors">(02)</span>
+        <h3 class="relative z-10 col-span-10 md:col-span-4 font-display text-2xl md:text-4xl font-semibold tracking-tight group-hover:text-cream group-hover:italic transition-all duration-300">Performance Marketing</h3>
+        <p class="relative z-10 hidden md:block md:col-span-5 text-sm leading-relaxed text-ink/60 group-hover:text-cream/80 transition-colors">Full-funnel paid across Meta, Google &amp; TikTok. Creative velocity, disciplined testing, budget follows evidence.</p>
+        <span class="relative z-10 hidden md:flex md:col-span-2 justify-end font-mono text-[10px] uppercase tracking-[0.18em] text-ink/50 group-hover:text-cream transition-colors">Meta / Google ↗</span>
+      </a>
+
+      <a href="#contact" data-img="https://picsum.photos/seed/service-content-social/560/420" class="service-row group relative grid grid-cols-12 items-center gap-3 md:gap-6 py-7 md:py-9 border-b border-ink/15 overflow-hidden">
+        <span class="absolute inset-0 bg-ink origin-bottom scale-y-0 group-hover:scale-y-100 transition-transform duration-500 ease-out"></span>
+        <span class="relative z-10 col-span-2 md:col-span-1 font-mono text-xs text-vermilion">(03)</span>
+        <h3 class="relative z-10 col-span-10 md:col-span-4 font-display text-2xl md:text-4xl font-semibold tracking-tight group-hover:text-cream group-hover:italic transition-all duration-300">Content &amp; Social</h3>
+        <p class="relative z-10 hidden md:block md:col-span-5 text-sm leading-relaxed text-ink/60 group-hover:text-cream/70 transition-colors">Editorial systems and short-form video that compound into community — not one-off viral lottery tickets.</p>
+        <span class="relative z-10 hidden md:flex md:col-span-2 justify-end font-mono text-[10px] uppercase tracking-[0.18em] text-ink/50 group-hover:text-vermilion transition-colors">Editorial ↗</span>
+      </a>
+
+      <a href="#contact" data-img="https://picsum.photos/seed/service-lifecycle-crm/560/420" class="service-row group relative grid grid-cols-12 items-center gap-3 md:gap-6 py-7 md:py-9 border-b border-ink/15 overflow-hidden">
+        <span class="absolute inset-0 bg-vermilion origin-bottom scale-y-0 group-hover:scale-y-100 transition-transform duration-500 ease-out"></span>
+        <span class="relative z-10 col-span-2 md:col-span-1 font-mono text-xs text-vermilion group-hover:text-cream transition-colors">(04)</span>
+        <h3 class="relative z-10 col-span-10 md:col-span-4 font-display text-2xl md:text-4xl font-semibold tracking-tight group-hover:text-cream group-hover:italic transition-all duration-300">Lifecycle &amp; CRM</h3>
+        <p class="relative z-10 hidden md:block md:col-span-5 text-sm leading-relaxed text-ink/60 group-hover:text-cream/80 transition-colors">Email, SMS and retention flows that turn one-time buyers into regulars. The quiet 30% of revenue nobody photographs.</p>
+        <span class="relative z-10 hidden md:flex md:col-span-2 justify-end font-mono text-[10px] uppercase tracking-[0.18em] text-ink/50 group-hover:text-cream transition-colors">Klaviyo ↗</span>
+      </a>
+
+      <a href="#contact" data-img="https://picsum.photos/seed/service-analytics-cro/560/420" class="service-row group relative grid grid-cols-12 items-center gap-3 md:gap-6 py-7 md:py-9 border-b border-ink/15 overflow-hidden">
+        <span class="absolute inset-0 bg-ink origin-bottom scale-y-0 group-hover:scale-y-100 transition-transform duration-500 ease-out"></span>
+        <span class="relative z-10 col-span-2 md:col-span-1 font-mono text-xs text-vermilion">(05)</span>
+        <h3 class="relative z-10 col-span-10 md:col-span-4 font-display text-2xl md:text-4xl font-semibold tracking-tight group-hover:text-cream group-hover:italic transition-all duration-300">Analytics &amp; CRO</h3>
+        <p class="relative z-10 hidden md:block md:col-span-5 text-sm leading-relaxed text-ink/60 group-hover:text-cream/70 transition-colors">GA4, dashboards, landing-page experiments — decisions made on evidence, never on vibes.</p>
+        <span class="relative z-10 hidden md:flex md:col-span-2 justify-end font-mono text-[10px] uppercase tracking-[0.18em] text-ink/50 group-hover:text-vermilion transition-colors">GA4 / A·B ↗</span>
+      </a>
+
+      <div id="svcPreview" class="hidden md:block" aria-hidden="true"><img src="" alt=""></div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= 03 · SELECTED WORK (stacked cards) ======= -->
+<section id="work" class="scroll-mt-24 mx-auto max-w-[1440px] px-5 md:px-10 py-24 md:py-36">
+  <div class="reveal flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.3em] opacity-60">
+    <span class="w-9 h-px bg-vermilion"></span> 03 — Selected campaigns
+  </div>
+  <div class="mt-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+    <h2 class="font-display font-bold tracking-tight text-4xl md:text-6xl">Proof, stacked <span class="italic text-vermilion">high.</span></h2>
+    <p class="font-mono text-[10px] uppercase tracking-[0.25em] opacity-50">2023 — 2026 · Results verified by clients</p>
+  </div>
+
+  <div class="mt-14 space-y-10 md:space-y-16 pb-10">
+
+    <!-- CASE 01 -->
+    <article class="stack-card sticky rounded-sm overflow-hidden shadow-card" style="top:96px">
+      <div class="grid md:grid-cols-2 bg-ink text-cream">
+        <div class="p-8 md:p-12 flex flex-col justify-between min-h-[380px]">
+          <div class="flex justify-between font-mono text-[10px] uppercase tracking-[0.25em] opacity-60"><span>Case 01 — D2C Food</span><span>2025</span></div>
+          <div class="mt-8">
+            <h3 class="font-display text-4xl md:text-5xl font-bold tracking-tight">Taza Foods</h3>
+            <p class="mt-3 font-display italic text-xl text-vermilion">"From shelf to doorstep."</p>
+            <p class="mt-4 text-sm leading-relaxed opacity-70 max-w-md">A 70-year-old family brand stuck in supermarkets. We rebuilt the offer around a subscription pantry box and relaunched with a creator-led UGC funnel.</p>
+          </div>
+          <div>
+            <div class="grid grid-cols-3 divide-x divide-cream/15 border-t border-cream/15 mt-8">
+              <div class="py-4 pr-4"><div class="font-display text-2xl md:text-3xl font-bold text-vermilion">+312%</div><div class="font-mono text-[9px] uppercase tracking-[0.2em] opacity-60 mt-1">YoY revenue</div></div>
+              <div class="py-4 px-4"><div class="font-display text-2xl md:text-3xl font-bold text-vermilion">4.7×</div><div class="font-mono text-[9px] uppercase tracking-[0.2em] opacity-60 mt-1">ROAS</div></div>
+              <div class="py-4 pl-4"><div class="font-display text-2xl md:text-3xl font-bold text-vermilion">−41%</div><div class="font-mono text-[9px] uppercase tracking-[0.2em] opacity-60 mt-1">CAC</div></div>
+            </div>
+            <div class="mt-5 flex flex-wrap gap-2 font-mono text-[9px] uppercase tracking-[0.2em]">
+              <span class="border border-cream/25 px-3 py-1">Strategy</span><span class="border border-cream/25 px-3 py-1">Performance</span><span class="border border-cream/25 px-3 py-1">Retention</span>
+            </div>
+          </div>
+        </div>
+        <div class="relative bg-vermilion min-h-[240px] overflow-hidden group">
+          <img src="https://picsum.photos/seed/campaign-taza-foods/900/760" alt="Taza Foods campaign visuals" loading="lazy" class="absolute inset-0 w-full h-full object-cover grayscale mix-blend-luminosity opacity-90 transition-transform duration-700 group-hover:scale-105">
+          <span class="absolute top-4 right-4 bg-cream text-ink font-mono text-[9px] tracking-[0.25em] uppercase px-3 py-1.5">Flagship case</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- CASE 02 -->
+    <article class="stack-card sticky rounded-sm overflow-hidden shadow-card" style="top:114px">
+      <div class="grid md:grid-cols-2 bg-vermilion text-cream">
+        <div class="p-8 md:p-12 flex flex-col justify-between min-h-[380px]">
+          <div class="flex justify-between font-mono text-[10px] uppercase tracking-[0.25em] opacity-80"><span>Case 02 — Fintech</span><span>2024</span></div>
+          <div class="mt-8">
+            <h3 class="font-display text-4xl md:text-5xl font-bold tracking-tight">Nova Bank</h3>
+            <p class="mt-3 font-display italic text-xl">"Banking for the bold."</p>
+            <p class="mt-4 text-sm leading-relaxed opacity-85 max-w-md">App launch in a saturated market. Positioning: the card that rounds spare change into gold. 140 creative variants shipped in six months.</p>
+          </div>
+          <div>
+            <div class="grid grid-cols-3 divide-x divide-cream/25 border-t border-cream/25 mt-8">
+              <div class="py-4 pr-4"><div class="font-display text-2xl md:text-3xl font-bold">220K</div><div class="font-mono text-[9px] uppercase tracking-[0.2em] opacity-80 mt-1">Installs</div></div>
+              <div class="py-4 px-4"><div class="font-display text-2xl md:text-3xl font-bold">$0.84</div><div class="font-mono text-[9px] uppercase tracking-[0.2em] opacity-80 mt-1">CPI</div></div>
+              <div class="py-4 pl-4"><div class="font-display text-2xl md:text-3xl font-bold">4.8★</div><div class="font-mono text-[9px] uppercase tracking-[0.2em] opacity-80 mt-1">Store rating</div></div>
+            </div>
+            <div class="mt-5 flex flex-wrap gap-2 font-mono text-[9px] uppercase tracking-[0.2em]">
+              <span class="border border-cream/40 px-3 py-1">Launch</span><span class="border border-cream/40 px-3 py-1">Creative testing</span><span class="border border-cream/40 px-3 py-1">ASO</span>
+            </div>
+          </div>
+        </div>
+        <div class="relative bg-ink min-h-[240px] overflow-hidden group">
+          <img src="https://picsum.photos/seed/campaign-nova-bank/900/760" alt="Nova Bank launch campaign" loading="lazy" class="absolute inset-0 w-full h-full object-cover grayscale mix-blend-luminosity opacity-80 transition-transform duration-700 group-hover:scale-105">
+          <span class="absolute top-4 right-4 bg-cream text-ink font-mono text-[9px] tracking-[0.25em] uppercase px-3 py-1.5">App launch</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- CASE 03 -->
+    <article class="stack-card sticky rounded-sm overflow-hidden shadow-card" style="top:132px">
+      <div class="grid md:grid-cols-2 bg-paper text-ink border border-ink/10">
+        <div class="p-8 md:p-12 flex flex-col justify-between min-h-[380px]">
+          <div class="flex justify-between font-mono text-[10px] uppercase tracking-[0.25em] opacity-60"><span>Case 03 — Beauty</span><span>2024</span></div>
+          <div class="mt-8">
+            <h3 class="font-display text-4xl md:text-5xl font-bold tracking-tight">Layla Beauty</h3>
+            <p class="mt-3 font-display italic text-xl text-vermilion">"Drops that sell out."</p>
+            <p class="mt-4 text-sm leading-relaxed opacity-70 max-w-md">Zero ad spend in Q1 — a pure organic engine: founder-led series, tutorial duets, SMS waitlists. Then paid was switched on to a warm audience.</p>
+          </div>
+          <div>
+            <div class="grid grid-cols-3 divide-x divide-ink/15 border-t border-ink/15 mt-8">
+              <div class="py-4 pr-4"><div class="font-display text-2xl md:text-3xl font-bold text-vermilion">38M</div><div class="font-mono text-[9px] uppercase tracking-[0.2em] opacity-60 mt-1">Organic views</div></div>
+              <div class="py-4 px-4"><div class="font-display text-2xl md:text-3xl font-bold text-vermilion">+260%</div><div class="font-mono text-[9px] uppercase tracking-[0.2em] opacity-60 mt-1">Followers</div></div>
+              <div class="py-4 pl-4"><div class="font-display text-2xl md:text-3xl font-bold text-vermilion">3/3</div><div class="font-mono text-[9px] uppercase tracking-[0.2em] opacity-60 mt-1">Drops sold out</div></div>
+            </div>
+            <div class="mt-5 flex flex-wrap gap-2 font-mono text-[9px] uppercase tracking-[0.2em]">
+              <span class="border border-ink/25 px-3 py-1">Content</span><span class="border border-ink/25 px-3 py-1">Community</span><span class="border border-ink/25 px-3 py-1">Influencer</span>
+            </div>
+          </div>
+        </div>
+        <div class="relative bg-tan min-h-[240px] overflow-hidden group">
+          <img src="https://picsum.photos/seed/campaign-layla-beauty/900/760" alt="Layla Beauty social campaign" loading="lazy" class="absolute inset-0 w-full h-full object-cover grayscale mix-blend-multiply opacity-90 transition-transform duration-700 group-hover:scale-105">
+          <span class="absolute top-4 right-4 bg-ink text-cream font-mono text-[9px] tracking-[0.25em] uppercase px-3 py-1.5">Social-first</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- CASE 04 -->
+    <article class="stack-card sticky rounded-sm overflow-hidden shadow-card" style="top:150px">
+      <div class="grid md:grid-cols-2 bg-cream text-ink border border-ink/10">
+        <div class="p-8 md:p-12 flex flex-col justify-between min-h-[380px]">
+          <div class="flex justify-between font-mono text-[10px] uppercase tracking-[0.25em] opacity-60"><span>Case 04 — Subscription</span><span>2023</span></div>
+          <div class="mt-8">
+            <h3 class="font-display text-4xl md:text-5xl font-bold tracking-tight">Orbit Fit</h3>
+            <p class="mt-3 font-display italic text-xl text-vermilion">"Retention is the new acquisition."</p>
+            <p class="mt-4 text-sm leading-relaxed opacity-70 max-w-md">Gyms sell in January; Orbit needed July. Onboarding rebuilt around habit streaks, lifecycle emails, and win-backs priced to LTV cohorts.</p>
+          </div>
+          <div>
+            <div class="grid grid-cols-3 divide-x divide-ink/15 border-t border-ink/15 mt-8">
+              <div class="py-4 pr-4"><div class="font-display text-2xl md:text-3xl font-bold text-vermilion">−29%</div><div class="font-mono text-[9px] uppercase tracking-[0.2em] opacity-60 mt-1">Churn</div></div>
+              <div class="py-4 px-4"><div class="font-display text-2xl md:text-3xl font-bold text-vermilion">+64%</div><div class="font-mono text-[9px] uppercase tracking-[0.2em] opacity-60 mt-1">LTV</div></div>
+              <div class="py-4 pl-4"><div class="font-display text-2xl md:text-3xl font-bold text-vermilion">12K</div><div class="font-mono text-[9px] uppercase tracking-[0.2em] opacity-60 mt-1">Members</div></div>
+            </div>
+            <div class="mt-5 flex flex-wrap gap-2 font-mono text-[9px] uppercase tracking-[0.2em]">
+              <span class="border border-ink/25 px-3 py-1">CRM</span><span class="border border-ink/25 px-3 py-1">Lifecycle</span><span class="border border-ink/25 px-3 py-1">CRO</span>
+            </div>
+          </div>
+        </div>
+        <div class="relative bg-ink min-h-[240px] overflow-hidden group">
+          <img src="https://picsum.photos/seed/campaign-orbit-fit/900/760" alt="Orbit Fit retention campaign" loading="lazy" class="absolute inset-0 w-full h-full object-cover grayscale opacity-80 transition-transform duration-700 group-hover:scale-105">
+          <span class="absolute top-4 right-4 bg-vermilion text-cream font-mono text-[9px] tracking-[0.25em] uppercase px-3 py-1.5">Retention</span>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ======= 04 · IMPACT BAND ======= -->
+<section class="bg-ink text-cream relative overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.04] font-display font-black text-[38vw] leading-none flex items-center justify-center select-none pointer-events-none" aria-hidden="true">ROAS</div>
+  <div class="relative mx-auto max-w-[1440px] px-5 md:px-10 py-20 md:py-28">
+    <div class="reveal flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.3em] text-vermilion">
+      <span class="w-9 h-px bg-vermilion"></span> 04 — Impact, measured
+    </div>
+    <div class="mt-12 grid grid-cols-2 lg:grid-cols-4 gap-10 md:gap-6">
+      <div class="reveal border-l border-cream/15 pl-5">
+        <div class="font-display text-5xl md:text-7xl font-bold tracking-tight"><span class="count" data-count="12.4" data-decimals="1" data-prefix="$" data-suffix="M">$0M</span></div>
+        <div class="font-mono text-[10px] uppercase tracking-[0.25em] opacity-50 mt-3">Ad spend managed</div>
+      </div>
+      <div class="reveal border-l border-cream/15 pl-5" style="transition-delay:.1s">
+        <div class="font-display text-5xl md:text-7xl font-bold tracking-tight text-vermilion"><span class="count" data-count="340" data-suffix="%">0%</span></div>
+        <div class="font-mono text-[10px] uppercase tracking-[0.25em] opacity-50 mt-3">Blended ROAS avg</div>
+      </div>
+      <div class="reveal border-l border-cream/15 pl-5" style="transition-delay:.2s">
+        <div class="font-display text-5xl md:text-7xl font-bold tracking-tight"><span class="count" data-count="87">0</span></div>
+        <div class="font-mono text-[10px] uppercase tracking-[0.25em] opacity-50 mt-3">Campaigns shipped</div>
+      </div>
+      <div class="reveal border-l border-cream/15 pl-5" style="transition-delay:.3s">
+        <div class="font-display text-5xl md:text-7xl font-bold tracking-tight"><span class="count" data-count="26">0</span></div>
+        <div class="font-mono text-[10px] uppercase tracking-[0.25em] opacity-50 mt-3">Markets reached</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= 05 · PROCESS ======= -->
+<section id="process" class="scroll-mt-24 mx-auto max-w-[1440px] px-5 md:px-10 py-24 md:py-36">
+  <div class="grid lg:grid-cols-12 gap-12 lg:gap-16">
+    <div class="lg:col-span-5">
+      <div class="reveal flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.3em] opacity-60">
+        <span class="w-9 h-px bg-vermilion"></span> 05 — Process
+      </div>
+      <h2 class="mt-6 font-display font-bold tracking-tight text-4xl md:text-6xl leading-tight">A clear path from <span class="italic text-vermilion">brief to growth.</span></h2>
+    </div>
+    <div class="lg:col-span-7 border-t border-ink/15">
+      <div class="reveal grid grid-cols-[auto_1fr] gap-6 py-7 border-b border-ink/15">
+        <span class="font-mono text-xs text-vermilion">01</span><div><h3 class="font-display text-2xl font-semibold">Diagnose</h3><p class="mt-2 text-sm leading-relaxed opacity-70">We define the business problem, audience, offer and one number that matters.</p></div>
+      </div>
+      <div class="reveal grid grid-cols-[auto_1fr] gap-6 py-7 border-b border-ink/15" style="transition-delay:.1s">
+        <span class="font-mono text-xs text-vermilion">02</span><div><h3 class="font-display text-2xl font-semibold">Design</h3><p class="mt-2 text-sm leading-relaxed opacity-70">Strategy becomes a practical creative system, channel plan and testing roadmap.</p></div>
+      </div>
+      <div class="reveal grid grid-cols-[auto_1fr] gap-6 py-7 border-b border-ink/15" style="transition-delay:.2s">
+        <span class="font-mono text-xs text-vermilion">03</span><div><h3 class="font-display text-2xl font-semibold">Deliver</h3><p class="mt-2 text-sm leading-relaxed opacity-70">We launch fast, learn weekly and move budget toward what the evidence supports.</p></div>
+      </div>
+      <div class="reveal grid grid-cols-[auto_1fr] gap-6 py-7 border-b border-ink/15" style="transition-delay:.3s">
+        <span class="font-mono text-xs text-vermilion">04</span><div><h3 class="font-display text-2xl font-semibold">Compound</h3><p class="mt-2 text-sm leading-relaxed opacity-70">Every result becomes a sharper creative, stronger funnel and better next decision.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= 08 · CONTACT ======= -->
+<section id="contact" class="scroll-mt-24 bg-vermilion text-cream">
+  <div class="mx-auto max-w-[1440px] px-5 md:px-10 py-24 md:py-36">
+    <div class="reveal font-mono text-[11px] uppercase tracking-[0.3em] opacity-80">08 — Start a project</div>
+    <div class="mt-8 grid lg:grid-cols-12 gap-12 items-end">
+      <h2 class="lg:col-span-8 font-display font-bold text-5xl md:text-8xl leading-[.9] tracking-tight">Have a number<br><span class="italic">to move?</span></h2>
+      <div class="lg:col-span-4">
+        <p class="text-sm leading-relaxed opacity-85">Tell me what you are building, where it is stuck, and what success looks like.</p>
+        <a href="mailto:za7224516@gmail.com" class="link-u inline-block mt-8 font-mono text-xs uppercase tracking-[0.2em]">za7224516@gmail.com ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="bg-ink text-cream px-5 md:px-10 py-8">
+  <div class="mx-auto max-w-[1440px] flex flex-col md:flex-row justify-between gap-4 font-mono text-[10px] uppercase tracking-[0.22em] opacity-60">
+    <span>© 2026 Zeinab ALI</span><span>Cairo · Dubai · Riyadh</span><a href="#top" class="hover:text-vermilion transition-colors">Back to top ↑</a>
+  </div>
+</footer>
+
+<div id="passwordGate" class="fixed inset-0 z-[110] hidden items-center justify-center bg-ink/80 p-4" hidden>
+  <form id="passwordForm" class="w-full max-w-sm bg-cream p-6 text-ink shadow-card" aria-labelledby="passwordTitle">
+    <h2 id="passwordTitle" class="font-display text-3xl font-bold">Dashboard password</h2>
+    <label for="adminPassword" class="mt-5 block font-mono text-[10px] uppercase tracking-wider">Enter password</label>
+    <input id="adminPassword" type="password" autocomplete="current-password" required class="mt-2 w-full border border-ink/20 bg-white/60 p-3 font-body text-sm" placeholder="Password">
+    <p id="passwordError" class="mt-3 min-h-5 text-sm text-vermilion" role="alert"></p>
+    <div class="mt-3 flex justify-end gap-3">
+      <button id="cancelPassword" type="button" class="border border-ink/20 px-4 py-2 font-mono text-xs">Cancel</button>
+      <button type="submit" class="bg-ink px-4 py-2 font-mono text-xs text-cream">Unlock</button>
+    </div>
+  </form>
+</div>
+
+<div id="adminPanel" class="fixed inset-0 z-[100] bg-ink/70 p-4 md:p-8 overflow-y-auto" aria-hidden="true">
+  <section class="admin-dialog mx-auto my-4 max-w-3xl bg-cream text-ink shadow-card" role="dialog" aria-modal="true" aria-labelledby="adminTitle">
+    <div class="sticky top-0 z-10 flex items-center justify-between border-b border-ink/15 bg-cream px-5 py-4 md:px-8">
+      <div><p class="font-mono text-[10px] uppercase tracking-[0.25em] text-vermilion">Portfolio controls</p><h2 id="adminTitle" class="font-display text-3xl font-bold">Edit your portfolio</h2></div>
+      <button id="closeAdmin" class="border border-ink/20 px-3 py-2 font-mono text-xs" type="button" aria-label="Close dashboard">Close ×</button>
+    </div>
+    <div class="space-y-8 p-5 md:p-8">
+      <div class="space-y-4">
+        <h3 class="font-display text-2xl font-semibold">Profile copy</h3>
+        <label class="block font-mono text-[10px] uppercase tracking-wider">Hero introduction<textarea id="editHero" rows="2" class="mt-2 w-full border border-ink/20 bg-white/60 p-3 font-body text-sm normal-case tracking-normal"></textarea></label>
+        <label class="block font-mono text-[10px] uppercase tracking-wider">About — paragraph one<textarea id="editBioOne" rows="4" class="mt-2 w-full border border-ink/20 bg-white/60 p-3 font-body text-sm normal-case tracking-normal"></textarea></label>
+        <label class="block font-mono text-[10px] uppercase tracking-wider">About — paragraph two<textarea id="editBioTwo" rows="4" class="mt-2 w-full border border-ink/20 bg-white/60 p-3 font-body text-sm normal-case tracking-normal"></textarea></label>
+      </div>
+      <div class="space-y-4 border-t border-ink/15 pt-6">
+        <h3 class="font-display text-2xl font-semibold">Profile photo</h3>
+        <p class="font-mono text-[10px] leading-relaxed opacity-60">Default: zeinab.png — replace it with a URL or an upload.</p>
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-start">
+          <img data-profile-photo src="zeinab.png" alt="Portrait of Zeinab ALI, marketing strategist" class="h-28 w-24 shrink-0 border border-ink/15 object-cover">
+          <div class="min-w-0 flex-1 space-y-4">
+            <label class="block font-mono text-[10px] uppercase tracking-wider">Photo URL<input id="profilePhotoUrl" type="url" placeholder="Portrait image URL" class="mt-2 w-full border border-ink/20 bg-white/60 p-3 font-body text-sm normal-case tracking-normal"></label>
+            <label class="block font-mono text-[10px] uppercase tracking-wider">Upload image from device<input id="profilePhotoFile" type="file" accept="image/*" aria-label="Upload profile photo" class="mt-2 block w-full font-body text-sm normal-case tracking-normal"></label>
+            <button id="resetProfilePhoto" class="font-mono text-[10px] uppercase tracking-wider text-vermilion underline" type="button">Reset to default photo</button>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="mb-4 flex items-center justify-between gap-3"><h3 class="font-display text-2xl font-semibold">Selected projects</h3><button id="addProject" class="bg-ink px-4 py-2 font-mono text-[10px] uppercase tracking-wider text-cream hover:bg-vermilion" type="button">+ Add project</button></div>
+        <div id="projectEditor" class="space-y-4"></div>
+      </div>
+      <form id="changePasswordForm" class="space-y-3 border-t border-ink/15 pt-6">
+        <h3 class="font-display text-2xl font-semibold">Change dashboard password</h3>
+        <label class="block font-mono text-[10px] uppercase tracking-wider">New password<input id="newAdminPassword" type="password" autocomplete="new-password" minlength="8" required class="mt-2 w-full border border-ink/20 bg-white/60 p-3 font-body text-sm normal-case tracking-normal"></label>
+        <label class="block font-mono text-[10px] uppercase tracking-wider">Confirm new password<input id="confirmAdminPassword" type="password" autocomplete="new-password" minlength="8" required class="mt-2 w-full border border-ink/20 bg-white/60 p-3 font-body text-sm normal-case tracking-normal"></label>
+        <button type="submit" class="bg-ink px-4 py-2 font-mono text-[10px] uppercase tracking-wider text-cream">Update password</button>
+        <p id="changePasswordMessage" class="text-sm" role="status"></p>
+      </form>
+      <p class="font-mono text-[10px] leading-relaxed opacity-60">Changes are saved in this browser on this device. Use the theme button in the header to cycle accent colors.</p>
+    </div>
+  </section>
+</div>
+<div id="toast" class="fixed bottom-6 left-1/2 z-[105] bg-ink text-cream px-5 py-3 font-mono text-[10px] uppercase tracking-[0.18em]" role="status" aria-live="polite">Message sent</div>
+
+<script>
+(() => {
+  const $ = (selector, root = document) => root.querySelector(selector);
+  const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Loader: always release the page, even if an optional asset fails.
+  const loader = $('#loader');
+  const loaderNum = $('#loaderNum');
+  const loaderBar = $('#loaderBar');
+  let progress = 0;
+  const loaderTimer = setInterval(() => {
+    progress = Math.min(progress + Math.ceil(Math.random() * 14), 100);
+    if (loaderNum) loaderNum.textContent = String(progress).padStart(3, '0');
+    if (loaderBar) loaderBar.style.width = progress + '%';
+    if (progress >= 100) {
+      clearInterval(loaderTimer);
+      setTimeout(() => loader?.classList.add('done'), 180);
+    }
+  }, 45);
+
+  // Scroll reveals and progress bar.
+  const revealItems = $$('.reveal, .rl');
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    const observer = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('in'); observer.unobserve(entry.target); }
+    }), { threshold: 0.12 });
+    revealItems.forEach(item => observer.observe(item));
+  } else revealItems.forEach(item => item.classList.add('in'));
+
+  const updateScroll = () => {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    $('#scrollProgress').style.width = (max > 0 ? window.scrollY / max * 100 : 0) + '%';
+    $('#siteHeader').classList.toggle('scrolled', window.scrollY > 24);
+  };
+  window.addEventListener('scroll', updateScroll, { passive: true });
+  updateScroll();
+
+  // Mobile menu.
+  const menuBtn = $('#menuBtn');
+  const mobileMenu = $('#mobileMenu');
+  const toggleMenu = (open = !mobileMenu.classList.contains('open')) => {
+    mobileMenu.classList.toggle('open', open);
+    mobileMenu.setAttribute('aria-hidden', String(!open));
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    document.body.classList.toggle('overflow-hidden', open);
+  };
+  menuBtn?.addEventListener('click', () => toggleMenu());
+  $$('#mobileMenu a').forEach(link => link.addEventListener('click', () => toggleMenu(false)));
+
+  // Service image preview follows the pointer without blocking links.
+  const preview = $('#svcPreview');
+  const previewImage = $('img', preview);
+  $$('.service-row').forEach(row => {
+    row.addEventListener('pointerenter', () => { previewImage.src = row.dataset.img; preview.classList.add('show'); });
+    row.addEventListener('pointermove', event => {
+      const bounds = $('#servicesList').getBoundingClientRect();
+      preview.style.left = (event.clientX - bounds.left) + 'px';
+      preview.style.top = (event.clientY - bounds.top) + 'px';
+    });
+    row.addEventListener('pointerleave', () => preview.classList.remove('show'));
+  });
+
+  // Animated impact counters.
+  $$('.count').forEach(counter => {
+    const target = Number(counter.dataset.count);
+    const decimals = Number(counter.dataset.decimals || 0);
+    const prefix = counter.dataset.prefix || '';
+    const suffix = counter.dataset.suffix || '';
+    const render = value => counter.textContent = prefix + value.toFixed(decimals) + suffix;
+    if (reduceMotion) { render(target); return; }
+    const start = performance.now();
+    const animate = now => {
+      const amount = Math.min((now - start) / 1200, 1);
+      render(target * (1 - Math.pow(1 - amount, 3)));
+      if (amount < 1) requestAnimationFrame(animate); else render(target);
+    };
+    const counterObserver = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) { requestAnimationFrame(animate); counterObserver.disconnect(); }
+    }, { threshold: 0.5 });
+    counterObserver.observe(counter);
+  });
+
+  // Cairo clock.
+  const clocks = $$('.js-clock');
+  const updateClock = () => clocks.forEach(clock => clock.textContent = new Intl.DateTimeFormat('en-GB', { timeZone: 'Africa/Cairo', hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date()));
+  updateClock(); setInterval(updateClock, 30000);
+
+  // Optional Three.js hero background.
+  const canvas = $('#threeHero');
+  if (canvas && window.THREE && !reduceMotion) {
+    try {
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+      camera.position.z = 5;
+      const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      const geometry = new THREE.IcosahedronGeometry(1.55, 2);
+      const material = new THREE.MeshBasicMaterial({ color: 0xF04E23, wireframe: true, transparent: true, opacity: 0.14 });
+      const mesh = new THREE.Mesh(geometry, material); scene.add(mesh);
+      const resize = () => { renderer.setSize(window.innerWidth, window.innerHeight, false); camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix(); };
+      window.addEventListener('resize', resize); resize();
+      const animate = () => { mesh.rotation.x += 0.0008; mesh.rotation.y += 0.0012; renderer.render(scene, camera); requestAnimationFrame(animate); };
+      animate();
+    } catch (error) {
+      canvas.remove();
+    }
+  }
+
+  // Accent theme switcher.
+  const themes = ['', 'theme-green', 'theme-pink'];
+  const themeNames = ['Orange', 'Green', 'Pink'];
+  let themeIndex = Math.max(0, themes.indexOf(localStorage.getItem('portfolio-theme') || ''));
+  const applyTheme = () => {
+    document.body.classList.remove('theme-green', 'theme-pink');
+    if (themes[themeIndex]) document.body.classList.add(themes[themeIndex]);
+    const button = $('#themeBtn');
+    button.textContent = themeNames[themeIndex];
+    button.setAttribute('aria-label', `Accent color: ${themeNames[themeIndex]}. Change color`);
+    localStorage.setItem('portfolio-theme', themes[themeIndex]);
+  };
+  applyTheme();
+  $('#themeBtn')?.addEventListener('click', () => { themeIndex = (themeIndex + 1) % themes.length; applyTheme(); if (typeof translatePage === 'function') translatePage(); });
+
+  // Translate visible text nodes across the whole page, including the dashboard.
+  let isArabic = false;
+  const arabicText = {
+    'Marketing Portfolio — 2026':'ملف أعمال تسويقي — ٢٠٢٦','Loading campaign':'جارٍ تحميل الحملة','Marketing · Cairo':'التسويق · القاهرة',
+    'About':'نبذة عني','Services':'الخدمات','Work':'الأعمال','Process':'المنهجية','Start a project':'ابدأ مشروعًا','Booking Q4 ’26':'الحجز للربع الرابع ٢٠٢٦','Theme':'السمة','Edit':'تحرير','Open menu':'فتح القائمة','Close menu':'إغلاق القائمة',
+    'CAIRO, EGYPT':'القاهرة، مصر','Marketing strategist —':'استراتيجية تسويق —','Portfolio Nº 01 / 2026':'ملف أعمال رقم ٠١ / ٢٠٢٦','See the campaigns ↓':'استعرض الحملات ↓','Start a project ↗':'ابدأ مشروعًا ↗',
+    'Years in marketing':'سنوات في التسويق','Campaigns shipped':'حملة منفذة','Ad spend managed':'الإنفاق الإعلاني المُدار','Average ROAS':'متوسط العائد على الإنفاق الإعلاني','OPEN FOR CAMPAIGNS ✦ BRAND ✦ GROWTH ✦':'متاحة للحملات ✦ العلامة التجارية ✦ النمو ✦','Scroll':'تمرير',
+    'Brand Strategy':'استراتيجية العلامة التجارية','Performance Media':'الإعلانات المدفوعة','Content that compounds':'محتوى يحقق نموًا تراكميًا','Lifecycle & CRM':'دورة حياة العملاء وإدارة العلاقات','Analytics-first':'التحليلات أولًا','Cairo → Dubai → Riyadh':'القاهرة ← دبي ← الرياض',
+    'Est. Cairo — 1996':'تأسست في القاهرة — ١٩٩٦','Zeinab ALI — Strategist':'زينب علي — استراتيجية تسويق','Currently: Head of Growth @ Maison K.':'حاليًا: مديرة النمو في Maison K.','Previously: Nova Bank · Orbit Fit':'سابقًا: Nova Bank · Orbit Fit','Coffee: 3/day · Dashboards: checked 7AM':'القهوة: ٣ يوميًا · مراجعة لوحات البيانات: ٧ صباحًا',
+    '01 — About':'٠١ — نبذة عني','Attention is cheap.':'الانتباه سهل.','Being remembered':'أما أن تبقى في الذاكرة','is expensive. I build the second.':'فذلك صعب. وأنا أبني ما يبقى.',
+    "I'm Zeinab — a marketing strategist who treats every campaign like a small business: it has to earn its budget back. I started in a tiny Cairo social agency scheduling posts at midnight; today I lead growth across four industries and two continents.":'أنا زينب — استراتيجية تسويق أتعامل مع كل حملة كأنها مشروع صغير يجب أن يحقق عائدًا يغطي ميزانيته. بدأت في وكالة تسويق اجتماعي صغيرة بالقاهرة، أجدول المنشورات عند منتصف الليل؛ واليوم أقود النمو في أربعة قطاعات وقارتين.',
+    'My work sits where brand and performance meet. I write the positioning, pressure-test the creative, and then defend the numbers in the boardroom — in English, Arabic, or spreadsheet.':'يجمع عملي بين بناء العلامة التجارية وتحقيق الأداء. أضع التموضع، وأختبر الأفكار الإبداعية بصرامة، ثم أدافع عن الأرقام في غرفة الاجتماعات — بالإنجليزية أو العربية أو جداول البيانات.',
+    'I believe in boring magic: weekly creative velocity, ruthless A/B discipline, and stories people actually retell. No vanity metrics, no "awareness" hand-waving — every plan ends with a number we\'re accountable to.':'أؤمن بالسحر العملي: وتيرة إبداع أسبوعية، وانضباط صارم في اختبارات A/B، وقصص يتناقلها الناس فعلًا. لا مؤشرات زائفة ولا حديث مبهم عن «الوعي» — كل خطة تنتهي برقم نتحمل مسؤوليته.',
+    'When I\'m not optimizing, I\'m mentoring women entering MENA growth teams and writing ':'عندما لا أعمل على التحسين، أوجّه النساء المنضمات إلى فرق النمو في الشرق الأوسط وشمال أفريقيا، وأكتب ',
+    ', a fortnightly newsletter on marketing craft.':'، نشرة نصف شهرية عن فن التسويق.',
+    '"Zeinab is the rare marketer who speaks both Creative and CFO."':'«زينب مسوّقة نادرة تتحدث لغة الإبداع والمدير المالي معًا.»','— Omar S., CMO @ Nova Bank':'— عمر س.، مدير التسويق في Nova Bank',
+    'Based':'الموقع','Cairo, EG':'القاهرة، مصر','Languages':'اللغات','Focus':'التركيز','Growth + Brand':'النمو والعلامة التجارية','Status':'الحالة','Open to briefs':'متاحة لاستقبال المشاريع',
+    '02 — What I do':'٠٢ — ما أقدمه','Five disciplines,':'خمسة تخصصات،','one accountable number.':'ورقم واحد نتحمل مسؤوليته.','Hover each discipline — every service comes with the tooling, the templates, and the receipts.':'مرّر المؤشر على كل تخصص — كل خدمة تشمل الأدوات والقوالب والنتائج الموثقة.',
+    'Positioning, naming and offer architecture — the story before the spend. If this is wrong, no budget can fix it.':'التموضع والتسمية وبناء العرض — القصة قبل الإنفاق. إذا كانت خاطئة، فلن تصلحها أي ميزانية.','Positioning ↗':'التموضع ↗',
+    'Performance Marketing':'التسويق القائم على الأداء','Full-funnel paid across Meta, Google & TikTok. Creative velocity, disciplined testing, budget follows evidence.':'إعلانات مدفوعة عبر Meta وGoogle وTikTok ضمن مسار العميل كاملًا. وتيرة إبداع واختبارات منضبطة وميزانية تتبع الأدلة.','Meta / Google ↗':'Meta / Google ↗',
+    'Content & Social':'المحتوى والتواصل الاجتماعي','Editorial systems and short-form video that compound into community — not one-off viral lottery tickets.':'أنظمة تحريرية ومقاطع قصيرة تبني مجتمعًا على المدى الطويل — لا رهانات عابرة على الانتشار.','Editorial ↗':'المحتوى التحريري ↗',
+    'Email, SMS and retention flows that turn one-time buyers into regulars. The quiet 30% of revenue nobody photographs.':'رسائل البريد والرسائل النصية ومسارات الاحتفاظ التي تحول المشتري لمرة واحدة إلى عميل دائم. إنها ٣٠٪ من الإيرادات التي لا يلتفت إليها أحد.','Klaviyo ↗':'Klaviyo ↗',
+    'Analytics & CRO':'التحليلات وتحسين التحويل','GA4, dashboards, landing-page experiments — decisions made on evidence, never on vibes.':'تحليلات GA4 ولوحات البيانات وتجارب صفحات الهبوط — قرارات مبنية على الأدلة لا الانطباعات.','GA4 / A·B ↗':'GA4 / A·B ↗',
+    '03 — Selected campaigns':'٠٣ — حملات مختارة','Proof, stacked ':'الإنجازات تتراكم ','high.':'وتعلو.','2023 — 2026 · Results verified by clients':'٢٠٢٣ — ٢٠٢٦ · نتائج موثقة من العملاء',
+    'Case 01 — D2C Food':'الحالة ٠١ — أغذية مباشرة للمستهلك','"From shelf to doorstep."':'«من رف المتجر إلى باب المنزل.»','A 70-year-old family brand stuck in supermarkets. We rebuilt the offer around a subscription pantry box and relaunched with a creator-led UGC funnel.':'علامة عائلية عمرها ٧٠ عامًا عالقة في المتاجر. أعدنا بناء العرض حول صندوق مؤن باشتراك، وأطلقناها مجددًا عبر مسار محتوى من إنشاء المستخدمين يقوده صناع المحتوى.','YoY revenue':'الإيرادات السنوية','ROAS':'العائد على الإنفاق الإعلاني','CAC':'تكلفة اكتساب العميل','Strategy':'الاستراتيجية','Performance':'الأداء','Retention':'الاحتفاظ','Flagship case':'الحالة الرئيسية',
+    'Case 02 — Fintech':'الحالة ٠٢ — التقنية المالية','"Banking for the bold."':'«مصرفية للجرأة.»','App launch in a saturated market. Positioning: the card that rounds spare change into gold. 140 creative variants shipped in six months.':'إطلاق تطبيق في سوق مزدحم. التموضع: بطاقة تحوّل الفكة إلى ذهب. أُنتج ١٤٠ إصدارًا إبداعيًا خلال ستة أشهر.','Installs':'التنزيلات','Store rating':'تقييم المتجر','Launch':'الإطلاق','Creative testing':'اختبار الإبداع','App launch':'إطلاق التطبيق',
+    'Case 03 — Beauty':'الحالة ٠٣ — الجمال','"Drops that sell out."':'«إصدارات تنفد بالكامل.»','Zero ad spend in Q1 — a pure organic engine: founder-led series, tutorial duets, SMS waitlists. Then paid was switched on to a warm audience.':'دون إنفاق إعلاني في الربع الأول — محرك نمو عضوي بالكامل: سلسلة تقودها المؤسسة، ومقاطع تعليمية مشتركة، وقوائم انتظار عبر الرسائل النصية. ثم أُطلقت الإعلانات للجمهور المهتم.','Organic views':'مشاهدات عضوية','Followers':'المتابعون','Drops sold out':'إصدارات نفدت','Content':'المحتوى','Community':'المجتمع','Influencer':'المؤثرون','Social-first':'التواصل الاجتماعي أولًا',
+    'Case 04 — Subscription':'الحالة ٠٤ — الاشتراكات','"Retention is the new acquisition."':'«الاحتفاظ هو الاكتساب الجديد.»','Gyms sell in January; Orbit needed July. Onboarding rebuilt around habit streaks, lifecycle emails, and win-backs priced to LTV cohorts.':'تزداد مبيعات النوادي في يناير؛ أما Orbit فاحتاجت إلى يوليو. أُعيد بناء تجربة الانضمام حول سلاسل العادات ورسائل دورة حياة العميل وحملات الاستعادة وفق قيمة العميل مدى الحياة.','Churn':'التسرب','Members':'الأعضاء','Lifecycle':'دورة حياة العميل','CRO':'تحسين معدل التحويل',
+    '04 — Impact, measured':'٠٤ — الأثر بالأرقام','Blended ROAS avg':'متوسط العائد الموحّد على الإنفاق الإعلاني','Markets reached':'الأسواق التي وصلنا إليها',
+    '05 — Process':'٠٥ — المنهجية','A clear path from ':'مسار واضح من ','brief to growth.':'الموجز إلى النمو.','Diagnose':'التشخيص','We define the business problem, audience, offer and one number that matters.':'نحدد تحدي العمل والجمهور والعرض والرقم الأهم.','Design':'التصميم','Strategy becomes a practical creative system, channel plan and testing roadmap.':'نحوّل الاستراتيجية إلى نظام إبداعي عملي وخطة قنوات ومسار للاختبار.','Deliver':'التنفيذ','We launch fast, learn weekly and move budget toward what the evidence supports.':'نطلق بسرعة ونتعلم أسبوعيًا ونوجه الميزانية إلى ما تدعمه الأدلة.','Compound':'النمو التراكمي','Every result becomes a sharper creative, stronger funnel and better next decision.':'كل نتيجة تصنع إبداعًا أدق ومسارًا أقوى وقرارًا أفضل في المرة القادمة.',
+    '08 — Start a project':'٠٨ — ابدأ مشروعًا','Have a number':'هل لديك رقم','to move?':'تريد تحسينه؟','Tell me what you are building, where it is stuck, and what success looks like.':'أخبريني بما تعملين على بنائه، وأين تعثّر، وكيف يبدو النجاح بالنسبة إليك.','Back to top ↑':'العودة إلى الأعلى ↑',
+    'Dashboard password':'كلمة مرور لوحة التحكم','Enter password':'أدخل كلمة المرور','Password':'كلمة المرور','Cancel':'إلغاء','Unlock':'فتح','Change dashboard password':'تغيير كلمة مرور لوحة التحكم','New password':'كلمة المرور الجديدة','Confirm new password':'تأكيد كلمة المرور الجديدة','Update password':'تحديث كلمة المرور',
+    'Portfolio controls':'إعدادات ملف الأعمال','Edit your portfolio':'تحرير ملف أعمالك','Close ×':'إغلاق ×','Profile copy':'نصوص الملف الشخصي','Hero introduction':'المقدمة الرئيسية','About — paragraph one':'نبذة عني — الفقرة الأولى','About — paragraph two':'نبذة عني — الفقرة الثانية','Selected projects':'المشاريع المختارة','+ Add project':'+ أضف مشروعًا','Changes are saved in this browser on this device. Use the theme button in the header to cycle accent colors.':'تُحفظ التغييرات في هذا المتصفح وعلى هذا الجهاز. استخدم زر السمة في أعلى الصفحة للتبديل بين ألوان التمييز.','Message sent':'تم إرسال الرسالة','Project title':'عنوان المشروع','Project description':'وصف المشروع','Project image URL':'رابط صورة المشروع','Upload image from device':'ارفع صورة من الجهاز','Upload project image':'رفع صورة المشروع','Delete project':'حذف المشروع','New campaign':'حملة جديدة','Add a short project summary here.':'أضف ملخصًا قصيرًا للمشروع هنا.','Selected campaign':'حملة مختارة','New':'جديد','Campaign strategy · Growth':'استراتيجية الحملات · النمو',
+    'Switch to Arabic':'التبديل إلى العربية','Switch to English':'التبديل إلى الإنجليزية','Close dashboard':'إغلاق لوحة التحكم','Primary':'الرئيسية','Mobile':'قائمة الهاتف','Accent color: ':'لون التمييز: ','. Change color':'. تغيير اللون',
+    '© 2026 Zeinab ALI':'© ٢٠٢٦ زينب علي','Cairo · Dubai · Riyadh':'القاهرة · دبي · الرياض','Portrait of Zeinab ALI, marketing strategist':'صورة زينب علي، استراتيجية تسويق','Taza Foods campaign visuals':'تصاميم حملة Taza Foods','Nova Bank launch campaign':'حملة إطلاق Nova Bank','Layla Beauty social campaign':'حملة Layla Beauty على التواصل الاجتماعي','Orbit Fit retention campaign':'حملة الاحتفاظ بعملاء Orbit Fit','Project title':'عنوان المشروع','Project description':'وصف المشروع','Close dashboard':'إغلاق لوحة التحكم',
+    'Profile photo':'الصورة الشخصية','Default: zeinab.png — replace it with a URL or an upload.':'الصورة الافتراضية: zeinab.png — يمكنك استبدالها برابط أو برفع صورة من الجهاز.','Photo URL':'رابط الصورة','Portrait image URL':'رابط الصورة الشخصية','Upload profile photo':'رفع الصورة الشخصية','Reset to default photo':'إعادة الصورة الافتراضية'
+  };
+  const originalTextNodes = new WeakMap();
+  const originalHtml = new WeakMap();
+  const originalAttributes = new WeakMap();
+  const translatePage = () => {
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    let node;
+    while ((node = walker.nextNode())) {
+      if (!originalTextNodes.has(node)) originalTextNodes.set(node, node.nodeValue);
+      const original = originalTextNodes.get(node);
+      const trimmed = original.trim();
+      if (!trimmed) continue;
+      const translated = arabicText[trimmed];
+      if (translated) {
+        const start = original.indexOf(trimmed);
+        node.nodeValue = original.slice(0, start) + (isArabic ? translated : trimmed) + original.slice(start + trimmed.length);
+      }
+    }
+    $$('[aria-label], [placeholder], [title], [alt]').forEach(element => {
+      let saved = originalAttributes.get(element);
+      if (!saved) { saved = {}; originalAttributes.set(element, saved); }
+      ['aria-label', 'placeholder', 'title', 'alt'].forEach(attribute => {
+        if (!element.hasAttribute(attribute)) return;
+        if (!(attribute in saved)) saved[attribute] = element.getAttribute(attribute);
+        const original = saved[attribute];
+        element.setAttribute(attribute, isArabic ? (arabicText[original] || original) : original);
+      });
+    });
+    const hero = $('#heroIntro');
+    if (hero) {
+      if (!originalHtml.has(hero)) originalHtml.set(hero, hero.innerHTML);
+      const englishHero = originalHtml.get(hero);
+      hero.innerHTML = isArabic && englishHero.includes('I plan, launch and scale campaigns')
+        ? 'أخطط الحملات وأطلقها وأنمّيها لتحويل <em class="font-display italic">الاهتمام إلى إيرادات</em> — خبرة ٨ سنوات في قطاعات متعددة.'
+        : englishHero;
+    }
+    document.documentElement.lang = isArabic ? 'ar' : 'en';
+    document.body.dir = isArabic ? 'rtl' : 'ltr';
+    $('#langBtn').textContent = isArabic ? 'EN' : 'AR';
+    $('#langBtn').setAttribute('aria-label', isArabic ? 'Switch to English' : 'Switch to Arabic');
+    $('#menuBtn')?.setAttribute('aria-label', isArabic ? 'فتح القائمة' : 'Open menu');
+    $('#closeAdmin')?.setAttribute('aria-label', isArabic ? 'إغلاق لوحة التحكم' : 'Close dashboard');
+    $('#themeBtn').textContent = (isArabic ? ['برتقالي','أخضر','زهري'] : ['Orange','Green','Pink'])[themeIndex];
+    $('#themeBtn').setAttribute('aria-label', `${isArabic ? 'لون التمييز: ' : 'Accent color: '}${(isArabic ? ['برتقالي','أخضر','زهري'] : ['Orange','Green','Pink'])[themeIndex]}${isArabic ? ' — تغيير اللون' : '. Change color'}`);
+    document.title = isArabic ? 'زينب علي — استراتيجية تسويق وحكاية العلامات التجارية' : 'Zeinab ALI — Marketing Strategist & Brand Storyteller';
+  };
+  $('#langBtn')?.addEventListener('click', () => { isArabic = !isArabic; translatePage(); });
+  translatePage();
+
+  // Portfolio dashboard: client-side password gate (not server-grade security).
+  const adminPanel = $('#adminPanel');
+  const passwordGate = $('#passwordGate');
+  const passwordKey = 'portfolio-admin-password-hash';
+  const passwordSalt = 'zeinab-portfolio-local-salt-v1:';
+  const hashPassword = async password => {
+    const bytes = new TextEncoder().encode(passwordSalt + password);
+    const digest = await crypto.subtle.digest('SHA-256', bytes);
+    return [...new Uint8Array(digest)].map(byte => byte.toString(16).padStart(2, '0')).join('');
+  };
+  const showPasswordGate = () => {
+    passwordGate.hidden = false;
+    $('#passwordError').textContent = '';
+    $('#adminPassword').value = '';
+    document.body.classList.add('overflow-hidden');
+    $('#adminPassword').focus();
+  };
+  const hidePasswordGate = () => {
+    passwordGate.hidden = true;
+    document.body.classList.remove('overflow-hidden');
+  };
+  const openAdmin = () => showPasswordGate();
+  const closeAdmin = () => { adminPanel.classList.remove('open'); adminPanel.setAttribute('aria-hidden', 'true'); document.body.classList.remove('overflow-hidden'); };
+  const passwordReady = (async () => {
+    if (!localStorage.getItem(passwordKey)) {
+      const initialPassword = String.fromCharCode(49, 50, 51, 52, 52, 51, 50, 49);
+      localStorage.setItem(passwordKey, await hashPassword(initialPassword));
+    }
+  })();
+  $('#adminBtn')?.addEventListener('click', openAdmin);
+  $('#passwordForm')?.addEventListener('submit', async event => {
+    event.preventDefault();
+    const submitButton = $('button[type="submit"]', event.currentTarget);
+    submitButton.disabled = true;
+    try {
+      await passwordReady;
+      const savedHash = localStorage.getItem(passwordKey);
+      if (await hashPassword($('#adminPassword').value) === savedHash) {
+        hidePasswordGate();
+        adminPanel.classList.add('open');
+        adminPanel.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('overflow-hidden');
+      } else {
+        $('#passwordError').textContent = isArabic ? 'كلمة المرور غير صحيحة.' : 'Incorrect password.';
+        $('#adminPassword').select();
+      }
+    } catch (error) {
+      $('#passwordError').textContent = isArabic ? 'تعذر التحقق من كلمة المرور في هذا المتصفح.' : 'Password verification is unavailable in this browser.';
+    } finally {
+      submitButton.disabled = false;
+    }
+  });
+  $('#cancelPassword')?.addEventListener('click', hidePasswordGate);
+  $('#closeAdmin')?.addEventListener('click', closeAdmin);
+  adminPanel?.addEventListener('click', event => { if (event.target === adminPanel) closeAdmin(); });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && adminPanel.classList.contains('open')) closeAdmin();
+    else if (event.key === 'Escape' && !passwordGate.hidden) hidePasswordGate();
+  });
+  $('#changePasswordForm')?.addEventListener('submit', async event => {
+    event.preventDefault();
+    const nextPassword = $('#newAdminPassword').value;
+    const confirmation = $('#confirmAdminPassword').value;
+    const message = $('#changePasswordMessage');
+    if (nextPassword.length < 8) {
+      message.textContent = isArabic ? 'يجب أن تتكون كلمة المرور من ٨ أحرف على الأقل.' : 'Use at least 8 characters for the password.';
+      return;
+    }
+    if (nextPassword !== confirmation) {
+      message.textContent = isArabic ? 'كلمتا المرور غير متطابقتين.' : 'The passwords do not match.';
+      return;
+    }
+    try {
+      localStorage.setItem(passwordKey, await hashPassword(nextPassword));
+      event.currentTarget.reset();
+      message.textContent = isArabic ? 'تم تحديث كلمة المرور.' : 'Password updated.';
+    } catch (error) {
+      message.textContent = isArabic ? 'تعذر حفظ كلمة المرور.' : 'Could not save the password.';
+    }
+  });
+
+  const readStore = (key, fallback) => {
+    try { const value = localStorage.getItem(key); return value ? JSON.parse(value) : fallback; }
+    catch (error) { return fallback; }
+  };
+  const writeStore = (key, value) => { try { localStorage.setItem(key, JSON.stringify(value)); } catch (error) {} };
+  const profileFields = [
+    ['hero', $('#heroIntro')],
+    ['bioOne', $('#aboutBioOne')],
+    ['bioTwo', $('#aboutBioTwo')]
+  ];
+  const savedProfile = readStore('portfolio-profile', {});
+  profileFields.forEach(([key, element]) => {
+    if (savedProfile[key]) element.textContent = savedProfile[key];
+    $('#edit' + key[0].toUpperCase() + key.slice(1)).value = element.textContent.trim();
+  });
+  originalHtml.set($('#heroIntro'), $('#heroIntro').innerHTML);
+  profileFields.forEach(([key, element]) => {
+    const field = $('#edit' + key[0].toUpperCase() + key.slice(1));
+    field.addEventListener('input', () => {
+      element.textContent = field.value;
+      if (key === 'hero') originalHtml.set(element, element.innerHTML);
+      savedProfile[key] = field.value;
+      writeStore('portfolio-profile', savedProfile);
+    });
+  });
+
+  // Profile photo: default is zeinab.png sitting next to this file.
+  const photoKey = 'portfolio-photo';
+  const profileImages = $$('[data-profile-photo]');
+  const defaultProfilePhoto = profileImages[0]?.getAttribute('src') || 'zeinab.png';
+  const photoUrlField = $('#profilePhotoUrl');
+  const photoFileField = $('#profilePhotoFile');
+  let photoFallbackUsed = false;
+  const savedPhoto = readStore(photoKey, '');
+  const applyProfilePhoto = source => {
+    const target = typeof source === 'string' && source ? source : defaultProfilePhoto;
+    profileImages.forEach(image => { image.src = target; });
+  };
+  const setProfilePhoto = source => {
+    if (source) writeStore(photoKey, source);
+    else try { localStorage.removeItem(photoKey); } catch (error) {}
+    applyProfilePhoto(source);
+  };
+  applyProfilePhoto(typeof savedPhoto === 'string' ? savedPhoto : '');
+  profileImages.forEach(image => image.addEventListener('error', () => {
+    if (photoFallbackUsed) return;
+    photoFallbackUsed = true;
+    setProfilePhoto('');
+    if (photoUrlField) photoUrlField.value = '';
+    if (photoFileField) photoFileField.value = '';
+  }));
+  if (photoUrlField) {
+    photoUrlField.value = typeof savedPhoto === 'string' && savedPhoto && !savedPhoto.startsWith('data:') ? savedPhoto : '';
+    photoUrlField.addEventListener('input', () => setProfilePhoto(photoUrlField.value.trim()));
+  }
+  photoFileField?.addEventListener('change', () => {
+    const file = photoFileField.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const source = new Image();
+      source.onload = () => {
+        const scale = Math.min(1, 1000 / source.width, 1000 / source.height);
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.round(source.width * scale);
+        canvas.height = Math.round(source.height * scale);
+        canvas.getContext('2d').drawImage(source, 0, 0, canvas.width, canvas.height);
+        setProfilePhoto(canvas.toDataURL('image/jpeg', 0.82));
+        if (photoUrlField) photoUrlField.value = '';
+      };
+      source.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+  $('#resetProfilePhoto')?.addEventListener('click', () => {
+    setProfilePhoto('');
+    if (photoUrlField) photoUrlField.value = '';
+    if (photoFileField) photoFileField.value = '';
+  });
+
+  const projectContainer = $('#work .mt-14.space-y-10');
+  let projectCards = $$('#work .stack-card');
+  let projects = readStore('portfolio-projects', null);
+  if (!Array.isArray(projects)) {
+          projects = projectCards.map((card, index) => ({
+      id: `project-${index}`,
+      title: card.querySelector('h3').textContent.trim(),
+      description: card.querySelector('p.mt-4').textContent.trim(),
+      image: card.querySelector('img')?.getAttribute('src') || ''
+    }));
+  }
+  projectCards.forEach((card, index) => { card.dataset.projectId = `project-${index}`; });
+  projectCards.forEach(card => {
+    const record = projects.find(project => project.id === card.dataset.projectId);
+    if (!record) card.remove();
+    else {
+      const cardImage = card.querySelector('img');
+      if (cardImage) {
+        cardImage.classList.add('project-image');
+        if (record.image === undefined) record.image = cardImage.getAttribute('src') || '';
+        cardImage.hidden = !record.image;
+        if (record.image) cardImage.src = record.image;
+      }
+      card.querySelector('h3').textContent = record.title;
+      card.querySelector('p.mt-4').textContent = record.description;
+    }
+  });
+  const createProjectCard = project => {
+    const article = document.createElement('article');
+    article.className = 'stack-card sticky rounded-sm overflow-hidden shadow-card';
+    article.dataset.projectId = project.id;
+    article.style.top = `${168 + projects.length * 12}px`;
+    article.innerHTML = '<div class="grid md:grid-cols-2 bg-paper text-ink border border-ink/10"><div class="p-8 md:p-12 flex flex-col justify-between min-h-[300px]"><div class="flex justify-between font-mono text-[10px] uppercase tracking-[0.25em] opacity-60"><span>Selected campaign</span><span>New</span></div><div class="mt-8"><h3 class="font-display text-4xl md:text-5xl font-bold tracking-tight"></h3><p class="mt-4 text-sm leading-relaxed opacity-70 max-w-md"></p></div><div class="mt-8 border-t border-ink/15 pt-4 font-mono text-[10px] uppercase tracking-wider text-vermilion">Campaign strategy · Growth</div></div><div class="relative bg-tan min-h-[240px] overflow-hidden flex items-center justify-center"><img class="project-image absolute inset-0 h-full w-full object-cover" alt="" loading="lazy" hidden><span class="project-placeholder font-display text-8xl italic text-ink/20">+</span></div></div>';
+    article.querySelector('h3').textContent = project.title;
+    article.querySelector('p.mt-4').textContent = project.description;
+    if (project.image) {
+      article.querySelector('.project-image').src = project.image;
+      article.querySelector('.project-image').hidden = false;
+      article.querySelector('.project-placeholder').hidden = true;
+    }
+    projectContainer.appendChild(article);
+    return article;
+  };
+  projects.forEach(project => {
+    if (!projectCards.some(card => card.dataset.projectId === project.id)) createProjectCard(project);
+  });
+  const saveProjects = () => writeStore('portfolio-projects', projects);
+  const renderProjectEditor = () => {
+    const editor = $('#projectEditor');
+    editor.replaceChildren();
+          projects.forEach((project, index) => {
+        const item = document.createElement('div');
+      item.className = 'border border-ink/15 bg-white/40 p-4';
+      const title = document.createElement('input');
+      title.className = 'w-full border border-ink/20 bg-cream p-2 font-display text-xl';
+      title.value = project.title;
+      title.setAttribute('aria-label', 'Project title');
+      const description = document.createElement('textarea');
+      description.className = 'mt-2 w-full border border-ink/20 bg-cream p-2 font-body text-sm';
+      description.rows = 3;
+      description.value = project.description;
+      description.setAttribute('aria-label', 'Project description');
+      const imageUrl = document.createElement('input');
+      imageUrl.type = 'url';
+      imageUrl.className = 'mt-2 w-full border border-ink/20 bg-cream p-2 font-body text-sm';
+      imageUrl.placeholder = 'Project image URL';
+      imageUrl.value = project.image && !project.image.startsWith('data:') ? project.image : '';
+      imageUrl.setAttribute('aria-label', 'Project image URL');
+      const imageFile = document.createElement('input');
+      imageFile.type = 'file';
+      imageFile.accept = 'image/*';
+      imageFile.className = 'mt-2 block w-full font-body text-sm';
+      imageFile.setAttribute('aria-label', 'Upload project image');
+      const imageUploadLabel = document.createElement('label');
+      imageUploadLabel.className = 'mt-3 block font-mono text-[10px] uppercase tracking-wider';
+      imageUploadLabel.textContent = 'Upload image from device';
+      imageUploadLabel.appendChild(imageFile);
+      const remove = document.createElement('button');
+      remove.type = 'button';
+      remove.className = 'mt-3 font-mono text-[10px] uppercase tracking-wider text-vermilion underline';
+      remove.textContent = 'Delete project';
+      const update = () => {
+        project.title = title.value;
+        project.description = description.value;
+        const card = $(`#work [data-project-id="${project.id}"]`);
+        if (card) {
+          card.querySelector('h3').textContent = project.title;
+          card.querySelector('p.mt-4').textContent = project.description;
+          const cardImage = card.querySelector('.project-image');
+          if (cardImage) {
+            cardImage.hidden = !project.image;
+            if (project.image) cardImage.src = project.image;
+            const placeholder = card.querySelector('.project-placeholder');
+            if (placeholder) placeholder.hidden = Boolean(project.image);
+          }
+        }
+        saveProjects();
+      };
+      title.addEventListener('input', update);
+      description.addEventListener('input', update);
+      imageUrl.addEventListener('input', () => { project.image = imageUrl.value.trim(); update(); });
+      imageFile.addEventListener('change', () => {
+        const file = imageFile.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          const source = new Image();
+          source.onload = () => {
+            const scale = Math.min(1, 1000 / source.width, 1000 / source.height);
+            const canvas = document.createElement('canvas');
+            canvas.width = Math.round(source.width * scale);
+            canvas.height = Math.round(source.height * scale);
+            canvas.getContext('2d').drawImage(source, 0, 0, canvas.width, canvas.height);
+            project.image = canvas.toDataURL('image/jpeg', 0.78);
+            imageUrl.value = '';
+            update();
+          };
+          source.src = reader.result;
+        };
+        reader.readAsDataURL(file);
+      });
+      remove.addEventListener('click', () => {
+        projects.splice(index, 1);
+        $(`#work [data-project-id="${project.id}"]`)?.remove();
+        saveProjects();
+        renderProjectEditor();
+      });
+      item.append(title, description, imageUrl, imageUploadLabel, remove);
+      editor.appendChild(item);
+    });
+    translatePage();
+  };
+  renderProjectEditor();
+  $('#addProject')?.addEventListener('click', () => {
+    const project = { id: `project-${Date.now()}`, title: 'New campaign', description: 'Add a short project summary here.' };
+    projects.push(project);
+    createProjectCard(project);
+    saveProjects();
+    renderProjectEditor();
+  });
+})();
+</script>
+</body>
+</html>
